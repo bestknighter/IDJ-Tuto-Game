@@ -1,4 +1,12 @@
-cmake_minimum_required (VERSION 3.7)
+# Created by Gabriel Barbosa
+# This CMakesLists.txt was created to make it easy to compile and cross compile
+# any project using SDL2 its sub-packages (image, mixer, net and ttf).
+#
+# To add or remove any sub-package, you'll need to comment/uncomment
+# the lines find_package(<package> REQUIRED), if (<package>_NOT_FOUND) ... endif (),
+# ${<package>_INCLUDE_DIR} and ${<package>_LIBRARY}
+
+cmake_minimum_required (VERSION 3.0)
 
 # If SDL2 libraries couldn't be found, setting this var may solve it.
 SET(SDL2_INSTALL_SEARCH_PATH "" CACHE PATH "Path to where SDL's bin, lib and include folders are")
@@ -27,7 +35,7 @@ endif (CMAKE_BUILD_TYPE MATCHES Debug)
 set (CMAKE_CXX_FLAGS_DEBUG "-pg -ggdb")
 
 # Setting project name and version
-project (${CURR_DIR} VERSION 0.1.0.0)
+project (${CURR_DIR} VERSION 0.1.0.1)
 
 # Passing some variables to the code
 configure_file (
