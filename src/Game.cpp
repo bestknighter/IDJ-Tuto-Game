@@ -5,7 +5,7 @@ Game* Game::instance = nullptr;
 Game::Game (std::string title, int width, int height) {
     if (instance == nullptr) {
         instance = this;
-    } // TODO lançar erro de instanciação múltipla de singleton
+    }
 
     // Inicializando a SDL
     if (SDL_Init (SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER)) {
@@ -35,8 +35,6 @@ Game::Game (std::string title, int width, int height) {
     if (renderer == nullptr) {
         fprintf (stderr, "[ERRO] Nao foi possivel criar uma janela (Game.cpp:Game()): %s\n", SDL_GetError());
     }
-
-    // TODO terminar construcao
 }
 
 Game::~Game () {
@@ -44,21 +42,24 @@ Game::~Game () {
     SDL_DestroyRenderer (renderer);
     SDL_DestroyWindow (window);
     SDL_Quit ();
-    // TODO destruir coisas do SDL
 }
 
 /* Game Loop */
 void Game::Run () {
-
+    for ( ; !state->QuitRequested (); SDL_Delay (33)) { // 30 FPS? Peasants... -_-
+        state->Update (0);
+        state->Render ();
+        SDL_RenderPresent (renderer);
+    }
 }
 
 SDL_Renderer* Game::GetRenderer () {
     return renderer;
 }
 
-// State& Game::GetState () {
-//     return *state;
-// }
+State& Game::GetState () {
+    return *state;
+}
 
 Game& Game::GetInstance () {
     return *instance;
