@@ -19,9 +19,9 @@ class Sprite {
     int GetHeight ();
     bool IsOpen ();
   private:
-    SDL_Texture* texture;
-    int width;
-    int height;
+    SDL_Texture* texture = nullptr;
+    int width = 0;
+    int height = 0;
     SDL_Rect clipRect;
 };
 
