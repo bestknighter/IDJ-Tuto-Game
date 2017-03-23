@@ -1,8 +1,7 @@
 #include "State.hpp"
 
-State::State () {
+State::State () : bg (std::string ("./resources/img/ocean.jpg")) {
     quitRequested = false;
-    bg = Sprite (std::string ("./resources/img/ocean.jpg"));
 }
 
 bool State::QuitRequested () {
