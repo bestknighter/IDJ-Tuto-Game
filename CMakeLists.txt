@@ -35,7 +35,7 @@ endif (CMAKE_BUILD_TYPE MATCHES Debug)
 set (CMAKE_CXX_FLAGS_DEBUG "-pg -ggdb")
 
 # Setting project name and version
-project (${CURR_DIR} VERSION 0.1.0.1)
+project (${CURR_DIR} VERSION 1.0.0.0)
 
 # Passing some variables to the code
 configure_file (
