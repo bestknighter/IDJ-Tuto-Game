@@ -18,7 +18,7 @@ class State {
     void Render ();
   private:
     Sprite bg;
-    bool quitRequested;
+    bool quitRequested = false;
 };
 
 #endif // _STATE_HPP_
