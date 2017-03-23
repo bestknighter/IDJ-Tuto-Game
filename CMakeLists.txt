@@ -45,7 +45,7 @@ configure_file (
 
 # Some paths where the SDL2 may be installed in windows
 if (WIN32)
-    set (SDL2_PATH ${SDL2_INSTALL_SEARCH__PATH} "C:/tools/msys64/mingw64" "C:/tools/SDL2" "C:/SDL2")
+    set (SDL2_PATH ${SDL2_INSTALL_SEARCH__PATH} "C:/tools/msys64/mingw64/x86_64-w64-mingw32" "C:/tools/msys64/mingw64" "C:/tools/SDL2" "C:/SDL2")
 endif()
 
 # Path where the Find<package>.cmake for SDL2
