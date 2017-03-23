@@ -42,7 +42,9 @@ void Sprite::Render (int x, int y) {
     dst.y = y;
     dst.w = clipRect.w;
     dst.h = clipRect.h;
-    SDL_RenderCopy (Game::GetInstance ().GetRenderer (), texture, &clipRect, &dst);
+    if (SDL_RenderCopy (Game::GetInstance ().GetRenderer (), texture, &clipRect, &dst) != 0) {
+        fprintf (stderr, "[ERRO] Nao foi possivel renderizar a sprite (Sprite.cpp:Render()): %s\n", SDL_GetError ());
+    }
 }
 
 int Sprite::GetWidth () {
