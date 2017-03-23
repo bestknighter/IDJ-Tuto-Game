@@ -35,9 +35,12 @@ Game::Game (std::string title, int width, int height) {
     if (renderer == nullptr) {
         fprintf (stderr, "[ERRO] Nao foi possivel criar uma janela (Game.cpp:Game()): %s\n", SDL_GetError());
     }
+
+    state = new State ();
 }
 
 Game::~Game () {
+    delete state;
     IMG_Quit ();
     SDL_DestroyRenderer (renderer);
     SDL_DestroyWindow (window);

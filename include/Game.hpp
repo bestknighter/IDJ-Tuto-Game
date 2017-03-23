@@ -21,8 +21,8 @@ class Game {
     static Game& GetInstance ();
   private:
     static Game* instance;
-    SDL_Window* window;
-    SDL_Renderer* renderer;
+    SDL_Window* window = nullptr;
+    SDL_Renderer* renderer = nullptr;
     State* state;
 };
 
