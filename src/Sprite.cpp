@@ -43,7 +43,7 @@ void Sprite::Render (int x, int y) {
     dst.w = clipRect.w;
     dst.h = clipRect.h;
     if (SDL_RenderCopy (Game::GetInstance ().GetRenderer (), texture, &clipRect, &dst) != 0) {
-        fprintf (stderr, "[ERRO] Nao foi possivel renderizar a sprite (Sprite.cpp:Render()): %s\n", SDL_GetError ());
+        fprintf (stderr, "[ERRO] Nao foi possivel renderizar a sprite (%s:%d): %s\n", __FILE__, __LINE__, SDL_GetError ());
     }
 }
 
