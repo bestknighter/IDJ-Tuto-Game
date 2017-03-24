@@ -3,7 +3,16 @@
 
 #include <string>
 
-#include "SDL.h"
+#ifdef _WIN32
+    #include "SDL.h"
+#elif __APPLE__
+    #include "TargetConditionals.h"
+    #include "SDL2/SDL.h"
+#elif __unix__
+    #include "SDL.h"
+#else
+#   error "Unknown or unsupported compiler"
+#endif
 
 class State;
 

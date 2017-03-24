@@ -4,8 +4,19 @@
 #include <cstdio>
 #include <string>
 
-#include "SDL.h"
-#include "SDL_image.h"
+#ifdef _WIN32
+    #include "SDL.h"
+    #include "SDL_image.h"
+#elif __APPLE__
+    #include "TargetConditionals.h"
+    #include "SDL2/SDL.h"
+    #include "SDL2/SDL_image.h"
+#elif __unix__
+    #include "SDL.h"
+    #include "SDL_image.h"
+#else
+#   error "Unknown or unsupported compiler"
+#endif
 
 class Game;
 
