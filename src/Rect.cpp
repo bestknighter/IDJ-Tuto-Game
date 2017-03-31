@@ -52,6 +52,10 @@ Vec2 Rect::GetCentro () {
     return Vec2 ((x + w)/2, (y + h)/2);
 }
 
-bool Rect::isInside (Vec2& point) {
+bool Rect::IsInside (float x, float y) {
+    return this->x <= x && x <= this->x+w && this->y <= y && y <= this->y+h;
+}
+
+bool Rect::IsInside (Vec2& point) {
     return x <= point.x && point.x <= x+w && y <= point.y && point.y <= y+h;
 }

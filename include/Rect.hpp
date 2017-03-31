@@ -1,6 +1,8 @@
 #ifndef _RECT_HPP_
 #define _RECT_HPP_
 
+class Rect;
+
 #include "Vec2.hpp"
 
 class Rect {
@@ -18,7 +20,8 @@ class Rect {
     Vec2 GetTamanho ();
     Vec2 GetPosicao ();
     Vec2 GetCentro ();
-    bool isInside (Vec2& point);
+    bool IsInside (float x, float y);
+    bool IsInside (Vec2& point);
 };
 
 #endif //_RECT_HPP_
