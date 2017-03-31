@@ -37,6 +37,7 @@ Game::Game (std::string title, int width, int height) {
     }
 
     state = new State ();
+    srand (time (0));
 }
 
 Game::~Game () {

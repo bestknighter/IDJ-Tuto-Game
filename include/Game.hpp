@@ -3,6 +3,8 @@
 
 #include <cstdio>
 #include <string>
+#include <cstdlib>
+#include <ctime>
 
 #ifdef _WIN32
     #include "SDL.h"
@@ -36,7 +38,5 @@ class Game {
     SDL_Renderer* renderer = nullptr;
     State* state;
 };
-
-#include "Sprite.hpp"
 
 #endif //_GAME_HPP_
