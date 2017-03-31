@@ -36,7 +36,6 @@ class Sprite {
     SDL_Rect clipRect;
 };
 
-
 #include "Game.hpp"
 
 #endif // _SPRITE_HPP_
