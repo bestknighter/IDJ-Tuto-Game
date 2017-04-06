@@ -1,7 +1,8 @@
 #ifndef _STATE_HPP_
 #define _STATE_HPP_
 
-#include <string>
+class State;
+
 #include <vector>
 #include <memory>
 
@@ -16,10 +17,10 @@
 #   error "Unknown or unsupported compiler"
 #endif
 
-class State;
-
 #include "Sprite.hpp"
 #include "GameObject.hpp"
+#include "TileSet.hpp"
+#include "TileMap.hpp"
 
 class State {
   public:
@@ -36,6 +37,8 @@ class State {
     bool quitRequested = false;
     std::vector<std::unique_ptr<GameObject>> objectArray;
 };
+
+#include <string>
 
 #include "Vec2.hpp"
 #include "Face.hpp"

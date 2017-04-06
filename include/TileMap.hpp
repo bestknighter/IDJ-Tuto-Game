@@ -1,10 +1,11 @@
 #ifndef _TILEMAP_HPP_
 #define _TILEMAP_HPP_
 
+class TileMap;
+
 #include <string>
 #include <vector>
-
-class TileMap;
+#include <fstream>
 
 #include "TileSet.hpp"
 
@@ -21,7 +22,7 @@ class TileMap {
     int GetDepth ();
   private:
     std::vector<int> tileMatrix;
-    tileSet* tileSet;
+    TileSet* tileSet;
     int mapWidth;
     int mapHeight;
     int mapDepth;

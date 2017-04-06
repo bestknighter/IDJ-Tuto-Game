@@ -1,8 +1,6 @@
 #ifndef _VEC2_HPP_
 #define _VEC2_HPP_
 
-#include <cmath>
-
 class Vec2 {
   public:
     float x;
@@ -26,5 +24,7 @@ class Vec2 {
     float magnitude;
     float radianos;
 };
+
+#include <cmath>
 
 #endif //_VEC2_HPP_

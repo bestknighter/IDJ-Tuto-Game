@@ -1,9 +1,9 @@
 #ifndef _TILESET_HPP_
 #define _TILESET_HPP_
 
-#include <string>
-
 class TileSet;
+
+#include <string>
 
 #include "Sprite.hpp"
 

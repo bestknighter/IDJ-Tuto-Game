@@ -1,7 +1,8 @@
 #ifndef _SPRITE_HPP_
 #define _SPRITE_HPP_
 
-#include <cstdio>
+class Sprite;
+
 #include <string>
 
 #ifdef _WIN32
@@ -35,6 +36,8 @@ class Sprite {
     int height = 0;
     SDL_Rect clipRect;
 };
+
+#include <cstdio>
 
 #include "Game.hpp"
 

@@ -1,10 +1,9 @@
 #ifndef _GAME_HPP_
 #define _GAME_HPP_
 
-#include <cstdio>
+class Game;
+
 #include <string>
-#include <cstdlib>
-#include <ctime>
 
 #ifdef _WIN32
     #include "SDL.h"
@@ -19,8 +18,6 @@
 #else
 #   error "Unknown or unsupported compiler"
 #endif
-
-class Game;
 
 #include "State.hpp"
 
@@ -38,5 +35,9 @@ class Game {
     SDL_Renderer* renderer = nullptr;
     State* state;
 };
+
+#include <cstdio>
+#include <cstdlib>
+#include <ctime>
 
 #endif //_GAME_HPP_
