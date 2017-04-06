@@ -33,9 +33,11 @@ class State {
   private:
     void Input ();
     void AddObject (float mouseX, float mouseY);
-    Sprite bg;
     bool quitRequested = false;
+    Sprite bg;
     std::vector<std::unique_ptr<GameObject>> objectArray;
+    TileSet* tileSet;
+    TileMap* tileMap;
 };
 
 #include <string>

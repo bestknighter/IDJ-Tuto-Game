@@ -1,10 +1,12 @@
 #include "State.hpp"
 
-State::State () : bg (std::string ("./resources/img/ocean.jpg")) {
+State::State () : bg ("./resources/img/ocean.jpg") {
+    tileSet = new TileSet (64, 64, "./resources/img/tileset.png");
+    tileMap = new TileMap ("./resources/map/tileMap.txt", tileSet);
     quitRequested = false;
 }
 
-State::~State() {
+State::~State () {
     objectArray.clear ();
 }
 
@@ -27,12 +29,13 @@ void State::Update (float dt) {
 
 void State::Render () {
     bg.Render (0, 0);
+    tileMap->Render(0, 0);
     for (unsigned int i = 0; i < objectArray.size (); ++i) {
         objectArray[i]->Render ();
     }
 }
 
-void State::Input() {
+void State::Input () {
     SDL_Event event;
     int mouseX, mouseY;
 
