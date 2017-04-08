@@ -40,4 +40,6 @@ class Game {
 #include <cstdlib>
 #include <ctime>
 
+#include "Resources.hpp"
+
 #endif //_GAME_HPP_

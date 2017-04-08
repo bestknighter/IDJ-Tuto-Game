@@ -13,20 +13,13 @@ Sprite::Sprite (std::string file) : Sprite () {
 }
 
 Sprite::~Sprite () {
-    SDL_DestroyTexture (texture);
+    
 }
 
 void Sprite::Open (std::string file) {
-    if (texture == nullptr) {
-        SDL_DestroyTexture (texture);
-    }
-    texture = IMG_LoadTexture (Game::GetInstance ().GetRenderer (), file.c_str ());
-    if (texture == nullptr) {
-        fprintf (stderr, "[ERRO] Nao foi possivel carregar a imagem no caminho %s (Sprite.cpp:Open()): %s\n", file.c_str (), SDL_GetError ());
-    } else {
-        SDL_QueryTexture (texture, nullptr, nullptr, &width, &height);
-        SetClip (0, 0, width, height);
-    }
+    texture = Resources::GetImage (file);
+    SDL_QueryTexture (texture, nullptr, nullptr, &width, &height);
+    SetClip (0, 0, width, height);
 }
 
 void Sprite::SetClip (int x, int y, int w, int h) {

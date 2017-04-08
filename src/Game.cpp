@@ -55,6 +55,7 @@ void Game::Run () {
         state->Render ();
         SDL_RenderPresent (renderer);
     }
+    Resources::ClearImages ();
 }
 
 SDL_Renderer* Game::GetRenderer () {
