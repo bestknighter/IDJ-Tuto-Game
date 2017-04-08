@@ -9,11 +9,18 @@ void TileMap::Load (std::string file) {
     std::fstream fs (file, std::fstream::in);
 
     fs >> mapWidth;
+    fs.ignore(1);
     fs >> mapHeight;
+    fs.ignore(1);
     fs >> mapDepth;
+    fs.ignore(1);
+
+    tileMatrix = std::vector<int>(mapDepth*mapHeight*mapWidth);
+
     int elem;
     for (int i = 0; i < mapDepth*mapHeight*mapWidth; ++i) {
         fs >> elem;
+        fs.ignore(1);
         tileMatrix[i] = elem-1;
     }
     
@@ -39,7 +46,10 @@ void TileMap::RenderLayer (int layer, int cameraX, int cameraY) {
     int dy = tileSet->GetTileHeight ();
     for (int j = 0; j < mapHeight; ++j) {
         for (int i = 0; i < mapWidth; i++) {
-            tileSet->Render (At(i,j,layer), i*dx-cameraX, j*dy-cameraY);
+            int index = At(i,j,layer);
+            if (index > -1) {
+                tileSet->Render (index, i*dx-cameraX, j*dy-cameraY);
+            }
         }
     }
 }
