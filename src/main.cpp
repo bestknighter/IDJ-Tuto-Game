@@ -23,11 +23,11 @@
 #   error "Unknown or unsupported compiler"
 #endif
 
-#include "CMakeVars.hpp"
+// #include "CMakeVars.hpp"
 
 #include "Game.hpp"
 
-int main(int argc, char** argv) {
+int main(int argc, char* argv[]) {
 
     printf("Project Version %d.%d.%d.%d ", PROJECT_VERSION_MAJOR, PROJECT_VERSION_MINOR, PROJECT_VERSION_PATCH, PROJECT_VERSION_TWEAK);
     printf(DEBUG?"DEBUG\n":"RELEASE\n");
