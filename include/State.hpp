@@ -12,7 +12,7 @@ class State;
     #include "TargetConditionals.h"
     #include "SDL2/SDL.h"
 #elif __unix__
-    #include "SDL.h"
+    #include "SDL2/SDL.h"
 #else
 #   error "Unknown or unsupported compiler"
 #endif
