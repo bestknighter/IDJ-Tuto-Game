@@ -23,8 +23,6 @@
 #   error "Unknown or unsupported compiler"
 #endif
 
-// #include "CMakeVars.hpp"
-
 #include "Game.hpp"
 
 int main(int argc, char* argv[]) {
