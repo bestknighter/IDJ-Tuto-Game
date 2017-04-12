@@ -12,7 +12,7 @@ class Resources;
     #include "TargetConditionals.h"
     #include "SDL2/SDL_image.h"
 #elif __unix__
-    #include "SDL_image.h"
+    #include "SDL2/SDL_image.h"
 #else
 #   error "Unknown or unsupported compiler"
 #endif
