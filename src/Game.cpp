@@ -42,9 +42,9 @@ Game::Game (std::string title, int width, int height) {
 
 Game::~Game () {
     delete state;
-    IMG_Quit ();
     SDL_DestroyRenderer (renderer);
     SDL_DestroyWindow (window);
+    IMG_Quit ();
     SDL_Quit ();
 }
 
