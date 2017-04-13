@@ -50,6 +50,7 @@ Game::~Game () {
 
 /* Game Loop */
 void Game::Run () {
+    state->LoadAssets ();
     for ( ; !state->QuitRequested (); SDL_Delay (33)) { // 30 FPS? Peasants... -_-
         state->Update (0);
         state->Render ();
