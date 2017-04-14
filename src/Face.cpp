@@ -12,7 +12,9 @@ void Face::Damage (int damage) {
 }
 
 void Face::Update (float dt) {
-
+    if (InputManager::GetInstance ().MousePress (LEFT_MOUSE_BUTTON) && box.IsInside (InputManager::GetInstance ().GetMouseX (), InputManager::GetInstance ().GetMouseY ())) {
+        Damage (rand () % 10 + 10);
+    }
 }
 
 void Face::Render () {

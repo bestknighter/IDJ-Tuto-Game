@@ -29,11 +29,15 @@ class Game {
     SDL_Renderer* GetRenderer ();
     State& GetState ();
     static Game& GetInstance ();
+    float GetDeltaTime ();
   private:
     static Game* instance;
     SDL_Window* window = nullptr;
     SDL_Renderer* renderer = nullptr;
     State* state;
+    int frameStart;
+    float dt;
+    void CalculateDeltaTime ();
 };
 
 #include <cstdio>
@@ -41,5 +45,6 @@ class Game {
 #include <ctime>
 
 #include "Resources.hpp"
+#include "InputManager.hpp"
 
 #endif //_GAME_HPP_

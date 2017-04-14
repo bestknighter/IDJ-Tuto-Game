@@ -18,4 +18,6 @@ class Face : public GameObject {
     Sprite sp;
 };
 
+#include <cstdlib>
+
 #endif //_FACE_HPP_

@@ -36,6 +36,8 @@ Game::Game (std::string title, int width, int height) {
         fprintf (stderr, "[ERRO] Nao foi possivel criar uma janela (%s:%d): %s\n", __FILE__, __LINE__, SDL_GetError());
     }
 
+    dt = 0;
+    frameStart = SDL_GetTicks ();
     state = new State ();
     srand (time (0));
 }
@@ -52,7 +54,9 @@ Game::~Game () {
 void Game::Run () {
     state->LoadAssets ();
     for ( ; !state->QuitRequested (); SDL_Delay (33)) { // 30 FPS? Peasants... -_-
-        state->Update (0);
+        CalculateDeltaTime ();
+        InputManager::GetInstance ().Update ();
+        state->Update (dt);
         state->Render ();
         SDL_RenderPresent (renderer);
     }
@@ -69,4 +73,14 @@ State& Game::GetState () {
 
 Game& Game::GetInstance () {
     return *instance;
+}
+
+float Game::GetDeltaTime () {
+    return dt;
+}
+
+void Game::CalculateDeltaTime () {
+    int newFrameStart = SDL_GetTicks ();
+    dt = (newFrameStart - frameStart)/1000.0;
+    frameStart = SDL_GetTicks ();
 }

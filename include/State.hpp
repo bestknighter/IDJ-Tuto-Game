@@ -31,7 +31,6 @@ class State {
     void Update (float dt);
     void Render ();
   private:
-    void Input ();
     void AddObject (float mouseX, float mouseY);
     bool quitRequested = false;
     Sprite bg;
@@ -44,5 +43,7 @@ class State {
 
 #include "Vec2.hpp"
 #include "Face.hpp"
+#include "InputManager.hpp"
+#include "Camera.hpp"
 
 #endif // _STATE_HPP_

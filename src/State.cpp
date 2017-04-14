@@ -19,8 +19,15 @@ void State::LoadAssets () {
 }
 
 void State::Update (float dt) {
-    Input();
+    quitRequested = InputManager::GetInstance ().QuitRequested () || InputManager::GetInstance ().KeyPress (ESCAPE);
+    if (InputManager::GetInstance ().IsKeyDown (SPACE)) {
+        AddObject (InputManager::GetInstance ().GetMouseX (), InputManager::GetInstance ().GetMouseY ());
+    }
+
+    Camera::Update (dt);
+
     for (int i = objectArray.size () - 1; i >= 0; --i) {
+        objectArray[i]->Update (dt);
         if (objectArray[i]->IsDead ()) {
             objectArray.erase (objectArray.begin () + i);
         }
@@ -28,38 +35,10 @@ void State::Update (float dt) {
 }
 
 void State::Render () {
-    bg.Render (0, 0);
-    tileMap->Render(0, 0);
+    bg.Render (Camera::pos.x, Camera::pos.y);
+    tileMap->Render(Camera::pos.x, Camera::pos.y);
     for (unsigned int i = 0; i < objectArray.size (); ++i) {
         objectArray[i]->Render ();
-    }
-}
-
-void State::Input () {
-    SDL_Event event;
-    int mouseX, mouseY;
-
-    SDL_GetMouseState (&mouseX, &mouseY);
-    while (SDL_PollEvent (&event)) {
-        if (event.type == SDL_QUIT) {
-            quitRequested = true;
-        }
-        if (event.type == SDL_MOUSEBUTTONDOWN) {
-            for (int i = objectArray.size () - 1; i >= 0; --i) {
-                Face* face = (Face*) objectArray[i].get ();
-                if(face->box.IsInside ((float)mouseX, (float)mouseY)) {
-                    face->Damage (rand () % 10 + 10);
-                    break;
-                }
-            }
-        }
-        if (event.type == SDL_KEYDOWN) {
-            if (event.key.keysym.sym == SDLK_ESCAPE) {
-                quitRequested = true;
-            } else {
-                AddObject ((float)mouseX, (float)mouseY);
-            }
-        }
     }
 }
 
