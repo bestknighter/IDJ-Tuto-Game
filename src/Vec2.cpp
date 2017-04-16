@@ -1,8 +1,5 @@
 #include "Vec2.hpp"
 
-Vec2 Vec2::i(1, 0);
-Vec2 Vec2::j(0, 1);
-
 Vec2::Vec2 () {
     x = y = 0;
 }

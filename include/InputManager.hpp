@@ -18,9 +18,14 @@
 #define UP_ARROW_KEY SDLK_UP
 #define DOWN_ARROW_KEY SDLK_DOWN
 #define ESCAPE_KEY SDLK_ESCAPE
+#define SPACE_KEY SDLK_SPACE
+
+#define W_KEY SDLK_w
+#define A_KEY SDLK_a
+#define S_KEY SDLK_s
+#define D_KEY SDLK_d
+
 #define LEFT_MOUSE_BUTTON SDL_BUTTON_LEFT
-#define ESCAPE SDLK_ESCAPE
-#define SPACE SDLK_SPACE
 
 class InputManager {
   public:

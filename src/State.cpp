@@ -19,8 +19,8 @@ void State::LoadAssets () {
 }
 
 void State::Update (float dt) {
-    quitRequested = InputManager::GetInstance ().QuitRequested () || InputManager::GetInstance ().KeyPress (ESCAPE);
-    if (InputManager::GetInstance ().IsKeyDown (SPACE)) {
+    quitRequested = InputManager::GetInstance ().QuitRequested () || InputManager::GetInstance ().KeyPress (ESCAPE_KEY);
+    if (InputManager::GetInstance ().KeyPress (SPACE_KEY)) {
         AddObject (InputManager::GetInstance ().GetMouseX (), InputManager::GetInstance ().GetMouseY ());
     }
 
@@ -45,7 +45,7 @@ void State::Render () {
 
 void State::AddObject (float mouseX, float mouseY) {
     Vec2 pos(mouseX, mouseY);
-    Vec2 dir = Vec2::FromPolar (200, 2*3.141592*(float)rand ()/RAND_MAX);
+    Vec2 dir = Vec2::FromPolar (200, 2*M_PI*(float)rand ()/RAND_MAX);
     pos = pos + dir + Camera::pos;
     objectArray.emplace_back (new Face {pos.x, pos.y});
 }

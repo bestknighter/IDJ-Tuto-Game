@@ -18,8 +18,6 @@ class Vec2 {
     Vec2 Rotate (float radianos);
     static float Dot (Vec2& lhs, Vec2& rhs);
     static float AnguloEntre (Vec2& lhs, Vec2& rhs);
-    static Vec2 i;
-    static Vec2 j;
   private:
     float magnitude;
     float radianos;
