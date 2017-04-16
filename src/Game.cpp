@@ -53,12 +53,15 @@ Game::~Game () {
 /* Game Loop */
 void Game::Run () {
     state->LoadAssets ();
-    for ( ; !state->QuitRequested (); SDL_Delay (33)) { // 30 FPS? Peasants... -_-
+    int delay;
+    for ( ; !state->QuitRequested (); SDL_Delay (delay>0 ? delay : 0)) {
         CalculateDeltaTime ();
         InputManager::GetInstance ().Update ();
         state->Update (dt);
         state->Render ();
         SDL_RenderPresent (renderer);
+
+        delay = 1000/frameRate + frameStart - SDL_GetTicks ();
     }
     Resources::ClearImages ();
 }
@@ -82,5 +85,8 @@ float Game::GetDeltaTime () {
 void Game::CalculateDeltaTime () {
     int newFrameStart = SDL_GetTicks ();
     dt = (newFrameStart - frameStart)/1000.0;
+    #if DEBUG
+    // printf ("%f FPS\n", 1.0/dt);
+    #endif // DEBUG
     frameStart = SDL_GetTicks ();
 }

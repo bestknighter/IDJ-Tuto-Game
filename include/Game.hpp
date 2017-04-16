@@ -36,6 +36,8 @@ class Game {
     SDL_Renderer* renderer = nullptr;
     State* state;
     int frameStart;
+    const int frameRate = 120; // 30 FPS is for peasants!!!
+    float frameDuration;
     float dt;
     void CalculateDeltaTime ();
 };
