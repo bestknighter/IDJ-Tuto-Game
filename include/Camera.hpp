@@ -19,4 +19,6 @@ class Camera {
 
 #include "InputManager.hpp"
 
+#define BASE_CAM_SPEED 300
+
 #endif // _CAMERA_HPP_

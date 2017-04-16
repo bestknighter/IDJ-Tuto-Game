@@ -11,7 +11,7 @@ class Face : public GameObject {
     Face (float x, float y);
     void Damage (int damage);
     void Update (float dt);
-    void Render ();
+    void Render (int cameraX, int cameraY);
     bool IsDead ();
   private:
     int hitPoints;
@@ -19,5 +19,7 @@ class Face : public GameObject {
 };
 
 #include <cstdlib>
+
+#include "Camera.hpp"
 
 #endif //_FACE_HPP_

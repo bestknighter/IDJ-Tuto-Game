@@ -35,16 +35,17 @@ void State::Update (float dt) {
 }
 
 void State::Render () {
-    bg.Render (Camera::pos.x, Camera::pos.y);
-    tileMap->Render(Camera::pos.x, Camera::pos.y);
+    bg.Render (0,0);
+    tileMap->Render(Camera::pos.x, Camera::pos.y, 0, 0);
     for (unsigned int i = 0; i < objectArray.size (); ++i) {
-        objectArray[i]->Render ();
+        objectArray[i]->Render (Camera::pos.x, Camera::pos.y);
     }
+    tileMap->Render(Camera::pos.x, Camera::pos.y, 1);
 }
 
 void State::AddObject (float mouseX, float mouseY) {
     Vec2 pos(mouseX, mouseY);
     Vec2 dir = Vec2::FromPolar (200, 2*3.141592*(float)rand ()/RAND_MAX);
-    pos = pos + dir;
-    objectArray.emplace_back (new Face (pos.x, pos.y));
+    pos = pos + dir + Camera::pos;
+    objectArray.emplace_back (new Face {pos.x, pos.y});
 }

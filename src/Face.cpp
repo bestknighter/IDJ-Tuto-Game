@@ -12,13 +12,15 @@ void Face::Damage (int damage) {
 }
 
 void Face::Update (float dt) {
-    if (InputManager::GetInstance ().MousePress (LEFT_MOUSE_BUTTON) && box.IsInside (InputManager::GetInstance ().GetMouseX (), InputManager::GetInstance ().GetMouseY ())) {
+    int posX = InputManager::GetInstance ().GetMouseX () + Camera::pos.x;
+    int posY = InputManager::GetInstance ().GetMouseY () + Camera::pos.y;
+    if (InputManager::GetInstance ().MousePress (LEFT_MOUSE_BUTTON) && box.IsInside (posX, posY)) {
         Damage (rand () % 10 + 10);
     }
 }
 
-void Face::Render () {
-    sp.Render (box.x, box.y);
+void Face::Render (int cameraX, int cameraY) {
+    sp.Render (box.x-cameraX, box.y-cameraY);
 }
 
 bool Face::IsDead () {

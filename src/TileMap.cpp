@@ -35,9 +35,9 @@ int& TileMap::At (int x, int y, int z) {
     return *((int*)(tileMatrix.data()) + x + mapWidth*y + mapWidth*mapHeight*z);
 }
 
-void TileMap::Render (int cameraX, int cameraY) {
-    for (int i = 0; i < mapDepth; ++i) {
-        RenderLayer (i, cameraX, cameraY);
+void TileMap::Render (int cameraX, int cameraY, unsigned int firstLayer, unsigned int lastLayer) {
+    for (int i = firstLayer; i < mapDepth && i <= lastLayer; ++i) {
+        RenderLayer (i, cameraX*(i+1), cameraY*(i+1));
     }
 }
 
