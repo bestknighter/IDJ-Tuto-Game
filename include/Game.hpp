@@ -21,25 +21,26 @@ class Game;
 
 #include "State.hpp"
 
+#define FPS_ALVO 120 // 30 FPS is for peasants!!!
+
 class Game {
   public:
     Game (std::string title, int width, int height);
     ~Game ();
-    void Run ();
+    void Run (); // Game Loop
     SDL_Renderer* GetRenderer ();
     State& GetState ();
     static Game& GetInstance ();
     float GetDeltaTime ();
   private:
-    static Game* instance;
-    SDL_Window* window = nullptr;
-    SDL_Renderer* renderer = nullptr;
-    State* state;
-    int frameStart;
-    const int frameRate = 120; // 30 FPS is for peasants!!!
-    float frameDuration;
-    float dt;
-    void CalculateDeltaTime ();
+    static Game* instance; // Instancia do Game (por ser um singleton)
+    SDL_Window* window = nullptr; // A janela a ser usada para exibicao
+    SDL_Renderer* renderer = nullptr; // O renderer usado pela janela
+    State* state; // Fase inicial do jogo
+    int frameStart; // Armazena o tick desde a inicializacao da biblioteca SDL ate o inicio do frame
+    const int frameRate = FPS_ALVO; // Limite maximo de fps
+    float dt; // Armazena quanto tempo se passou desde o ultimo frame
+    void CalculateDeltaTime (); // Calcula quanto tempo se passou desde o ultimo frame
 };
 
 #include <cstdio>

@@ -5,10 +5,10 @@ void InputManager::Update () {
     SDL_GetMouseState (&mouseX, &mouseY);
     quitRequested = false;
     ++updateCounter;
-    while (SDL_PollEvent (&event)) {
-        switch (event.type) {
+    while (SDL_PollEvent (&event)) { // Executa o loop enquanto tiver evento para lidar
+        switch (event.type) { // Muda o comportamento de acordo com o tipo do evento
             case SDL_KEYDOWN:
-                if (event.key.repeat) continue;
+                if (event.key.repeat) continue; // Nao precisa registrar repeticao de teclas (quando a tecla eh apertada e segurada)
                 keyState[event.key.keysym.sym] = true;
                 keyUpdate[event.key.keysym.sym] = updateCounter;
                 break;
@@ -77,7 +77,8 @@ InputManager& InputManager::GetInstance () {
 }
 
 InputManager::InputManager () {
-
+    updateCounter = 0;
+    quitRequested = false;
 }
 
 InputManager::InputManager (const InputManager& im) {

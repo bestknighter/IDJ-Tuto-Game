@@ -8,6 +8,7 @@ TileMap::TileMap (std::string file, TileSet* tileSet) {
 void TileMap::Load (std::string file) {
     std::fstream fs (file, std::fstream::in);
 
+    // Le dimensoes ignorando o espaco em branco
     fs >> mapWidth;
     fs.ignore(1);
     fs >> mapHeight;
@@ -17,6 +18,7 @@ void TileMap::Load (std::string file) {
 
     tileMatrix = std::vector<int>(mapDepth*mapHeight*mapWidth);
 
+    // Le os indices ignorando os espacos em branco
     int elem;
     for (int i = 0; i < mapDepth*mapHeight*mapWidth; ++i) {
         fs >> elem;
@@ -36,17 +38,17 @@ int& TileMap::At (int x, int y, int z) {
 }
 
 void TileMap::Render (int cameraX, int cameraY, unsigned int firstLayer, unsigned int lastLayer) {
-    for (int i = firstLayer; i < mapDepth && i <= lastLayer; ++i) {
+    for (unsigned int i = firstLayer; i < mapDepth && i <= lastLayer; ++i) {
         RenderLayer (i, cameraX*(i+1), cameraY*(i+1));
     }
 }
 
-void TileMap::RenderLayer (int layer, int cameraX, int cameraY) {
+void TileMap::RenderLayer (unsigned int layer, int cameraX, int cameraY) {
     int dx = tileSet->GetTileWidth ();
     int dy = tileSet->GetTileHeight ();
-    for (int j = 0; j < mapHeight; ++j) {
+    for (int j = 0; j < mapHeight; ++j) { // Percorre tile a tile do mapa e renderiza o tile de indice index naquela posicao
         for (int i = 0; i < mapWidth; i++) {
-            int index = At(i,j,layer);
+            int index = At(i,j,(int)layer);
             if (index > -1) {
                 tileSet->Render (index, i*dx-cameraX, j*dy-cameraY);
             }

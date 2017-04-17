@@ -12,17 +12,18 @@ class TileMap;
 class TileMap {
   public:
     TileMap (std::string file, TileSet* tileSet);
-    void Load (std::string file);
-    void SetTileSet (TileSet* tileSet);
-    int& At (int x, int y, int z = 0);
+    void Load (std::string file); // Carrega arquivo com os indices do mapa
+    void SetTileSet (TileSet* tileSet); // Seta "a skin" do mapa
+    int& At (int x, int y, int z = 0); // Retorna o indice de tile a ser usado naquela coordenada
+    // Renderiza todas as layers entre firstLayer (inclusivo) e lastLayer (inclusivo, -1 para renderizar todas)
     void Render (int cameraX = 0, int cameraY = 0, unsigned int firstLayer = 0, unsigned int lastLayer = -1);
-    void RenderLayer (int layer, int cameraX = 0, int cameraY = 0);
+    void RenderLayer (unsigned int layer, int cameraX = 0, int cameraY = 0); // Renderiza uma layer em especifico
     int GetWidth ();
     int GetHeight ();
     int GetDepth ();
   private:
-    std::vector<int> tileMatrix;
-    TileSet* tileSet;
+    std::vector<int> tileMatrix; // Vetor com todos os indices do mapa
+    TileSet* tileSet; // "Skin" do mapa
     int mapWidth;
     int mapHeight;
     int mapDepth;

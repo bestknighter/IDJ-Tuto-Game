@@ -25,12 +25,16 @@
 
 #include "Game.hpp"
 
+#define TITULO_JOGO "Gabriel Filipe Botelho Barbosa 12\\0050935"
+#define JOGO_WIDTH 1024
+#define JOGO_HEIGHT 600
+
 int main(int argc, char* argv[]) {
 
     printf("Project Version %d.%d.%d.%d ", PROJECT_VERSION_MAJOR, PROJECT_VERSION_MINOR, PROJECT_VERSION_PATCH, PROJECT_VERSION_TWEAK);
     printf(DEBUG?"DEBUG\n":"RELEASE\n");
 
-    Game game ("Gabriel Filipe Botelho Barbosa 12\\0050935", 1024, 600);
+    Game game (TITULO_JOGO, JOGO_WIDTH, JOGO_HEIGHT);
     game.Run ();
     
     return 0;

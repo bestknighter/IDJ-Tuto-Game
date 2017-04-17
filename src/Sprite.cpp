@@ -6,6 +6,8 @@ Sprite::Sprite () {
     clipRect.w = 0;
     clipRect.h = 0;
     texture = nullptr;
+    width = 0;
+    height = 0;
 }
 
 Sprite::Sprite (std::string file) : Sprite () {
@@ -30,7 +32,7 @@ void Sprite::SetClip (int x, int y, int w, int h) {
 }
 
 void Sprite::Render (int x, int y) {
-    SDL_Rect dst;
+    SDL_Rect dst; // Onde na tela a ROI vai aparecer
     dst.x = x;
     dst.y = y;
     dst.w = clipRect.w;

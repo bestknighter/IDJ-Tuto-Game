@@ -36,8 +36,9 @@ Game::Game (std::string title, int width, int height) {
         fprintf (stderr, "[ERRO] Nao foi possivel criar uma janela (%s:%d): %s\n", __FILE__, __LINE__, SDL_GetError());
     }
 
+    // Inicializando variaveis
     dt = 0;
-    frameStart = SDL_GetTicks ();
+    frameStart = 0;
     state = new State ();
     srand (time (0));
 }
@@ -50,17 +51,25 @@ Game::~Game () {
     SDL_Quit ();
 }
 
-/* Game Loop */
 void Game::Run () {
     state->LoadAssets ();
     int delay;
-    for ( ; !state->QuitRequested (); SDL_Delay (delay>0 ? delay : 0)) {
+
+    // Inicializa o game loop calculando qual e o tempo atual.
+    // Permanece nele somente se state nao tiver mandado sair
+    // Quando o frame termina, o Delay eh o tempo que faltava para se obter o framerate alvo
+    for (frameStart = SDL_GetTicks (); !state->QuitRequested (); SDL_Delay (delay>0 ? delay : 0)) {
         CalculateDeltaTime ();
+
+        // Updates
         InputManager::GetInstance ().Update ();
         state->Update (dt);
+
+        // Renders
         state->Render ();
         SDL_RenderPresent (renderer);
 
+        // Calcula quanto tempo livre esse frame ainda possui
         delay = 1000/frameRate + frameStart - SDL_GetTicks ();
     }
     Resources::ClearImages ();
@@ -86,6 +95,7 @@ void Game::CalculateDeltaTime () {
     int newFrameStart = SDL_GetTicks ();
     dt = (newFrameStart - frameStart)/1000.0;
     #if DEBUG
+    // Printa o FPS imediato em que o jogo esta rodando
     // printf ("%f FPS\n", 1.0/dt);
     #endif // DEBUG
     frameStart = SDL_GetTicks ();

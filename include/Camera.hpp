@@ -8,13 +8,13 @@ class Camera;
 
 class Camera {
   public:
-    static void Follow (GameObject* newFocus);
-    static void Unfollow ();
-    static void Update (float dt);
-    static Vec2 pos;
-    static Vec2 speed;
+    static void Follow (GameObject* newFocus); // Permite setar um novo foco para a camera seguir
+    static void Unfollow (); // Faz o controle da camera voltar a ser feito pelo usuario removendo o foco dela
+    static void Update (float dt); // Atualiza a posicao da camera
+    static Vec2 pos; // Posicao da camera
+    static Vec2 speed; // Velocidade da camera
   private:
-    static GameObject* focus;
+    static GameObject* focus; // Foco da camera
 };
 
 #include "InputManager.hpp"

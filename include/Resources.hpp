@@ -24,7 +24,7 @@ class Resources {
     static SDL_Texture* GetImage (std::string file);
     static void ClearImages ();
   private:
-    static std::unordered_map<std::string, SDL_Texture*> imageTable;
+    static std::unordered_map<std::string, SDL_Texture*> imageTable; // Tabela com as imagens de acordo com seus caminhos
 };
 
 #endif // _RESOURCES_HPP_

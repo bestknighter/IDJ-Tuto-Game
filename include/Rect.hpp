@@ -7,16 +7,16 @@ class Rect;
 
 class Rect {
   public:
-    float x;
-    float y;
-    float w;
-    float h;
+    float x; // Posicao X
+    float y; // Posicao Y
+    float w; // Largura
+    float h; // Altura
     Rect ();
     Rect (float x, float y, float w, float h);
     Rect operator+ (Rect& other);
     Rect operator- (Rect& other);
-    void Mover (Vec2& mov);
-    void SetTamanho (Vec2& novoTamanho);
+    void Mover (Vec2& mov); // Move o Rect sendo que mov eh o vetor deslocamento
+    void SetTamanho (Vec2& novoTamanho); // Seta novoTamanho como sendo o novo tamanho do Rect
     Vec2 GetTamanho ();
     Vec2 GetPosicao ();
     Vec2 GetCentro ();
@@ -24,4 +24,4 @@ class Rect {
     bool IsInside (Vec2& point);
 };
 
-#endif //_RECT_HPP_
+#endif // _RECT_HPP_

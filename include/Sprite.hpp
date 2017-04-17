@@ -24,17 +24,17 @@ class Sprite {
     Sprite ();
     Sprite (std::string file);
     ~Sprite ();
-    void Open (std::string file);
-    void SetClip (int x, int y, int w, int h);
-    void Render (int x, int y);
+    void Open (std::string file); // Carrega um imagem para esse sprite
+    void SetClip (int x, int y, int w, int h); // Seta a regiao de interesse (ROI - Region of Interest) da imagem
+    void Render (int x, int y); // Renderiza a ROI na posicao fornecida
     int GetWidth ();
     int GetHeight ();
     bool IsOpen ();
   private:
-    SDL_Texture* texture = nullptr;
+    SDL_Texture* texture = nullptr; // A imagem do objeto
     int width = 0;
     int height = 0;
-    SDL_Rect clipRect;
+    SDL_Rect clipRect; // ROI da imagem
 };
 
 #include <cstdio>

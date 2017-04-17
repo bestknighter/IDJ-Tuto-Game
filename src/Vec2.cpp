@@ -7,16 +7,14 @@ Vec2::Vec2 () {
 Vec2::Vec2 (float x, float y) {
     this->x = x;
     this->y = y;
-    magnitude = sqrt (pow (x, 2) + pow (y, 2));
-    radianos = atan2 (x, y);
 }
 
 float Vec2::GetMagnitude () {
-    return magnitude;
+    return sqrt (pow (x, 2) + pow (y, 2));;
 }
 
 float Vec2::GetRadianos () {
-    return radianos;
+    return atan2 (x, y);
 }
 
 Vec2 Vec2::FromPolar (float magnitude, float radianos) {

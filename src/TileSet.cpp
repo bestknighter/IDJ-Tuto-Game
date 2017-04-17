@@ -3,6 +3,7 @@
 TileSet::TileSet (int tileWidth, int tileHeight, std::string file) : tileSet (file.c_str ()) {
     this->tileWidth = tileWidth;
     this->tileHeight = tileHeight;
+    // Se a imagem nao for aberta com sucesso, columns e rows sera 0, impedindo de ocorrer erro ao chamar Render
     columns = tileSet.IsOpen () * (tileSet.GetWidth () / tileWidth);
     rows = tileSet.IsOpen () * (tileSet.GetHeight () / tileHeight);
 }
