@@ -38,6 +38,7 @@ Vec2 Vec2::operator/ (float other) {
 }
 
 Vec2 Vec2::GetNormal () {
+    float magnitude = GetMagnitude ();
     return Vec2 (x / magnitude, y / magnitude);
 }
 
@@ -53,5 +54,5 @@ float Vec2::Dot (Vec2& lhs, Vec2& rhs) {
 }
 
 float Vec2::AnguloEntre (Vec2& lhs, Vec2& rhs) {
-    return acos (Dot (lhs, rhs) / (lhs.magnitude * rhs.magnitude));
+    return acos (Dot (lhs, rhs) / (lhs.GetMagnitude () * rhs.GetMagnitude ()));
 }
