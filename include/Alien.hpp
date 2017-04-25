@@ -3,6 +3,9 @@
 
 class Alien;
 
+#define ALIEN_HP 50
+#define ALIEN_SPEED 100
+
 #include <queue>
 #include <vector>
 
@@ -10,31 +13,29 @@ class Alien;
 #include "Sprite.hpp"
 #include "Vec2.hpp"
 
-#define ALIEN_HP 50
-
-class Alien : GameObject {
+class Alien : public GameObject {
   public:
-    Alien (float x, float y, int nMinions);
+    Alien (Vec2 pos, int nMinions);
     ~Alien ();
     void Update (float dt);
-    void Render ();
+    void Render (int cameraX, int cameraY);
     bool IsDead ();
   private:
-    Sprite sp;
-    Vec2 speed;
-    int hp;
-    std::queue<Action> taskQueue;
-    std::vector<Minion> minionArray;
     class Action {
       public:
         enum ActionType {
             MOVE,
             SHOOT
         };
-        Action (ActionType type, float x, float y);
+        Action (ActionType type, Vec2 destination);
         ActionType type;
         Vec2 pos;
     };
+    Sprite sp;
+    Vec2 speed;
+    int hp;
+    std::queue<Action> taskQueue;
+    // std::vector<Minion> minionArray;
 };
 
 #endif // _ALIEN_HPP_
