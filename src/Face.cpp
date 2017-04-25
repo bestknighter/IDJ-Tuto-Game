@@ -1,4 +1,4 @@
-#include "Face.hpp"
+/*#include "Face.hpp"
 
 Face::Face (float x, float y) : sp ("./resources/img/penguinface.png") {
     float dx = sp.GetWidth ();
@@ -27,3 +27,4 @@ void Face::Render (int cameraX, int cameraY) {
 bool Face::IsDead () {
     return hitPoints <= 0;
 }
+*/

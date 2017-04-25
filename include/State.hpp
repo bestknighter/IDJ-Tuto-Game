@@ -22,8 +22,6 @@ class State;
 #include "TileSet.hpp"
 #include "TileMap.hpp"
 
-#define M_PI 3.14159265358979323846264338327950288
-
 // Fase com os penguins
 class State {
   public:
@@ -34,7 +32,7 @@ class State {
     void Update (float dt);
     void Render ();
   private:
-    void AddObject (float mouseX, float mouseY); // Adiciona pinguim
+    // void AddObject (float mouseX, float mouseY); // Adiciona pinguim
     bool quitRequested;
     Sprite bg; // Plano de fundo
     std::vector<std::unique_ptr<GameObject>> objectArray; // Objetos dessa fase

@@ -43,9 +43,9 @@ void State::Render () {
     tileMap->Render(Camera::pos.x, Camera::pos.y, 1); // Por ultimo renderiza o resto do mapa
 }
 
-void State::AddObject (float mouseX, float mouseY) {
-    Vec2 pos(mouseX, mouseY);
-    Vec2 dir = Vec2::FromPolar (200, 2*M_PI*(float)rand ()/RAND_MAX); // Gera um vetor deslocamento com modulo 200 e angulo aleatorio entre 0 e 2*PI
-    pos = pos + dir + Camera::pos;
-    objectArray.emplace_back (new Face {pos.x, pos.y});
-}
+// void State::AddObject (float mouseX, float mouseY) {
+//     Vec2 pos(mouseX, mouseY);
+//     Vec2 dir = Vec2::FromPolar (200, 2*M_PI*(float)rand ()/RAND_MAX); // Gera um vetor deslocamento com modulo 200 e angulo aleatorio entre 0 e 2*PI
+//     pos = pos + dir + Camera::pos;
+//     objectArray.emplace_back (new Face {pos.x, pos.y});
+// }

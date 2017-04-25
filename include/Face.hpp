@@ -1,4 +1,4 @@
-#ifndef _FACE_HPP_
+/*#ifndef _FACE_HPP_
 #define _FACE_HPP_
 
 class Face;
@@ -23,3 +23,4 @@ class Face : public GameObject {
 #include "Camera.hpp"
 
 #endif //_FACE_HPP_
+*/
