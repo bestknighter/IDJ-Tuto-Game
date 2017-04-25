@@ -20,7 +20,7 @@ void TileMap::Load (std::string file) {
 
     // Le os indices ignorando os espacos em branco
     int elem;
-    for (int i = 0; i < mapDepth*mapHeight*mapWidth; ++i) {
+    for (unsigned int i = 0; i < mapDepth*mapHeight*mapWidth; ++i) {
         fs >> elem;
         fs.ignore(1);
         tileMatrix[i] = elem-1;
@@ -46,8 +46,8 @@ void TileMap::Render (int cameraX, int cameraY, unsigned int firstLayer, unsigne
 void TileMap::RenderLayer (unsigned int layer, int cameraX, int cameraY) {
     int dx = tileSet->GetTileWidth ();
     int dy = tileSet->GetTileHeight ();
-    for (int j = 0; j < mapHeight; ++j) { // Percorre tile a tile do mapa e renderiza o tile de indice index naquela posicao
-        for (int i = 0; i < mapWidth; i++) {
+    for (unsigned int j = 0; j < mapHeight; ++j) { // Percorre tile a tile do mapa e renderiza o tile de indice index naquela posicao
+        for (unsigned int i = 0; i < mapWidth; i++) {
             int index = At(i,j,(int)layer);
             if (index > -1) {
                 tileSet->Render (index, i*dx-cameraX, j*dy-cameraY);
@@ -56,14 +56,14 @@ void TileMap::RenderLayer (unsigned int layer, int cameraX, int cameraY) {
     }
 }
 
-int TileMap::GetWidth () {
+unsigned int TileMap::GetWidth () {
     return mapWidth;
 }
 
-int TileMap::GetHeight () {
+unsigned int TileMap::GetHeight () {
     return mapHeight;
 }
 
-int TileMap::GetDepth () {
+unsigned int TileMap::GetDepth () {
     return mapDepth;
 }

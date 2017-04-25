@@ -1,5 +1,10 @@
 #include "Sprite.hpp"
 
+#include <cstdio>
+
+#include "Game.hpp"
+#include "Resources.hpp"
+
 Sprite::Sprite () {
     clipRect.x = 0;
     clipRect.y = 0;

@@ -1,6 +1,6 @@
 #include "TileSet.hpp"
 
-TileSet::TileSet (int tileWidth, int tileHeight, std::string file) : tileSet (file.c_str ()) {
+TileSet::TileSet (unsigned int tileWidth, unsigned int tileHeight, std::string file) : tileSet (file.c_str ()) {
     this->tileWidth = tileWidth;
     this->tileHeight = tileHeight;
     // Se a imagem nao for aberta com sucesso, columns e rows sera 0, impedindo de ocorrer erro ao chamar Render
@@ -17,10 +17,10 @@ void TileSet::Render (unsigned int index, float x, float y) {
     }
 }
 
-int TileSet::GetTileWidth () {
+unsigned int TileSet::GetTileWidth () {
     return tileWidth;
 }
 
-int TileSet::GetTileHeight () {
+unsigned int TileSet::GetTileHeight () {
     return tileHeight;
 }

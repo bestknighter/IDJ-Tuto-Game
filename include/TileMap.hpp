@@ -18,15 +18,15 @@ class TileMap {
     // Renderiza todas as layers entre firstLayer (inclusivo) e lastLayer (inclusivo, -1 para renderizar todas)
     void Render (int cameraX = 0, int cameraY = 0, unsigned int firstLayer = 0, unsigned int lastLayer = -1);
     void RenderLayer (unsigned int layer, int cameraX = 0, int cameraY = 0); // Renderiza uma layer em especifico
-    int GetWidth ();
-    int GetHeight ();
-    int GetDepth ();
+    unsigned int GetWidth ();
+    unsigned int GetHeight ();
+    unsigned int GetDepth ();
   private:
     std::vector<int> tileMatrix; // Vetor com todos os indices do mapa
     TileSet* tileSet; // "Skin" do mapa
-    int mapWidth;
-    int mapHeight;
-    int mapDepth;
+    unsigned int mapWidth;
+    unsigned int mapHeight;
+    unsigned int mapDepth;
 };
 
 #endif //_TILEMAP_HPP_

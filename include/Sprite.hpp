@@ -37,9 +37,4 @@ class Sprite {
     SDL_Rect clipRect; // ROI da imagem
 };
 
-#include <cstdio>
-
-#include "Game.hpp"
-#include "Resources.hpp"
-
 #endif // _SPRITE_HPP_

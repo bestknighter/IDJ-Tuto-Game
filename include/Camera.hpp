@@ -3,6 +3,8 @@
 
 class Camera;
 
+#define BASE_CAM_SPEED 300
+
 #include "Vec2.hpp"
 #include "GameObject.hpp"
 
@@ -16,9 +18,5 @@ class Camera {
   private:
     static GameObject* focus; // Foco da camera
 };
-
-#include "InputManager.hpp"
-
-#define BASE_CAM_SPEED 300
 
 #endif // _CAMERA_HPP_

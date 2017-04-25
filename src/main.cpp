@@ -1,3 +1,7 @@
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
+#warning "Remove all pragmas for final release"
+
 #include <cstdio>
 
 #ifdef _WIN32
@@ -24,6 +28,7 @@
 #endif
 
 #include "Game.hpp"
+#include "Vec2.hpp"
 
 #define TITULO_JOGO "Gabriel Filipe Botelho Barbosa 12\\0050935"
 #define JOGO_WIDTH 1024
@@ -34,8 +39,10 @@ int main(int argc, char* argv[]) {
     printf("Project Version %d.%d.%d.%d ", PROJECT_VERSION_MAJOR, PROJECT_VERSION_MINOR, PROJECT_VERSION_PATCH, PROJECT_VERSION_TWEAK);
     printf(DEBUG?"DEBUG\n":"RELEASE\n");
 
-    Game game (TITULO_JOGO, JOGO_WIDTH, JOGO_HEIGHT);
+    Game game (TITULO_JOGO, {JOGO_WIDTH, JOGO_HEIGHT});
     game.Run ();
     
     return 0;
 }
+
+#pragma GCC diagnostic pop

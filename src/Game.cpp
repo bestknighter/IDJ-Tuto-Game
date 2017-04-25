@@ -1,8 +1,15 @@
 #include "Game.hpp"
 
+#include <cstdio>
+#include <cstdlib>
+#include <ctime>
+
+#include "InputManager.hpp"
+#include "Resources.hpp"
+
 Game* Game::instance = nullptr;
 
-Game::Game (std::string title, int width, int height) {
+Game::Game (std::string title, Vec2 size) {
     if (instance == nullptr) {
         instance = this;
     }
@@ -25,7 +32,7 @@ Game::Game (std::string title, int width, int height) {
     }
 
     // Criando a janela
-    window = SDL_CreateWindow (title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, 0);
+    window = SDL_CreateWindow (title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, size.x, size.y, 0);
     if (window == nullptr) {
         fprintf (stderr, "[ERRO] Nao foi possivel criar uma janela (%s:%d): %s\n", __FILE__, __LINE__, SDL_GetError());
     }
@@ -62,7 +69,7 @@ void Game::Run () {
         CalculateDeltaTime ();
 
         // Updates
-        InputManager::GetInstance ().Update ();
+        IMinstance.Update ();
         state->Update (dt);
 
         // Renders

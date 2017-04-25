@@ -9,16 +9,16 @@ class TileSet;
 
 class TileSet {
   public:
-    TileSet (int tileWidth, int tileHeight, std::string file);
+    TileSet (unsigned int tileWidth, unsigned int tileHeight, std::string file);
     void Render (unsigned int index, float x, float y);
-    int GetTileWidth ();
-    int GetTileHeight ();
+    unsigned int GetTileWidth ();
+    unsigned int GetTileHeight ();
   private:
     Sprite tileSet;
-    int rows;
-    int columns;
-    int tileWidth;
-    int tileHeight;
+    unsigned int rows;
+    unsigned int columns;
+    unsigned int tileWidth;
+    unsigned int tileHeight;
 };
 
 #endif //_TILESET_HPP_

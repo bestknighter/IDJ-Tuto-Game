@@ -3,18 +3,7 @@
 
 class InputManager;
 
-#include <unordered_map>
-
-#ifdef _WIN32
-    #include "SDL_Events.h"
-#elif __APPLE__
-    #include "TargetConditionals.h"
-    #include "SDL2/SDL_Events.h"
-#elif __unix__
-    #include "SDL2/SDL_Events.h"
-#else
-#   error "Unknown or unsupported compiler"
-#endif
+#define IMinstance InputManager::GetInstance ()
 
 // Defines de teclado
 #define LEFT_ARROW_KEY SDLK_LEFT
@@ -31,6 +20,20 @@ class InputManager;
 
 // Defines de mouse
 #define LEFT_MOUSE_BUTTON SDL_BUTTON_LEFT
+#define RIGHT_MOUSE_BUTTON SDL_BUTTON_RIGHT
+
+#include <unordered_map>
+
+#ifdef _WIN32
+    #include "SDL_Events.h"
+#elif __APPLE__
+    #include "TargetConditionals.h"
+    #include "SDL2/SDL_Events.h"
+#elif __unix__
+    #include "SDL2/SDL_Events.h"
+#else
+#   error "Unknown or unsupported compiler"
+#endif
 
 class InputManager {
   public:

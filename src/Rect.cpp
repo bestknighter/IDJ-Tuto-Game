@@ -1,61 +1,42 @@
 #include "Rect.hpp"
 
-Rect::Rect () {
-    x = y = w = h = 0;
+Rect::Rect () : pos(), size() {
+
 }
 
-Rect::Rect (float x, float y, float w, float h) {
-    this->x = x;
-    this->y = y;
-    this->w = w;
-    this->h = h;
+Rect::Rect (Vec2 pos, Vec2 size) {
+    this->pos = pos;
+    this->size = size;
 }
 
-Rect Rect::operator+ (Rect& other) {
-    return Rect (
-        x + other.x,
-        y + other.y,
-        w + other.w,
-        h + other.h
-    );
+Rect Rect::operator+ (Rect const& other) {
+    return Rect (pos + other.pos, size + other.size);
 }
 
-
-Rect Rect::operator- (Rect& other) {
-    return Rect (
-        x - other.x,
-        y - other.y,
-        w - other.w,
-        h - other.h
-    );
+Rect Rect::operator- (Rect const& other) {
+    return Rect (pos - other.pos, size - other.size);
 }
 
-void Rect::Mover (Vec2& mov) {
-    x += mov.x;
-    y += mov.y;
+void Rect::Mover (Vec2 const& mov) {
+    pos = pos + mov;
 }
 
-void Rect::SetTamanho (Vec2& novoTamanho) {
-    w = novoTamanho.x;
-    h = novoTamanho.y;
+void Rect::SetTamanho (Vec2 const& novoTamanho) {
+    size = novoTamanho;
 }
 
 Vec2 Rect::GetTamanho () {
-    return Vec2 (w, h);
+    return size;
 }
 
 Vec2 Rect::GetPosicao () {
-    return Vec2 (x, y);
+    return pos;
 }
 
 Vec2 Rect::GetCentro () {
-    return Vec2 ((x + w)/2, (y + h)/2);
+    return pos + (size/2);
 }
 
-bool Rect::IsInside (float x, float y) {
-    return this->x <= x && x <= this->x+w && this->y <= y && y <= this->y+h;
-}
-
-bool Rect::IsInside (Vec2& point) {
-    return x <= point.x && point.x <= x+w && y <= point.y && point.y <= y+h;
+bool Rect::IsInside (Vec2 const& point) {
+    return pos.x <= point.x && point.x <= pos.x+size.x && pos.y <= point.y && point.y <= pos.y+size.y;
 }

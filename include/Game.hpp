@@ -3,6 +3,8 @@
 
 class Game;
 
+#define FPS_ALVO 120 // 30 FPS is for peasants!!!
+
 #include <string>
 
 #ifdef _WIN32
@@ -20,12 +22,11 @@ class Game;
 #endif
 
 #include "State.hpp"
-
-#define FPS_ALVO 120 // 30 FPS is for peasants!!!
+#include "Vec2.hpp"
 
 class Game {
   public:
-    Game (std::string title, int width, int height);
+    Game (std::string title, Vec2 size);
     ~Game ();
     void Run (); // Game Loop
     SDL_Renderer* GetRenderer ();
@@ -42,12 +43,5 @@ class Game {
     float dt; // Armazena quanto tempo se passou desde o ultimo frame
     void CalculateDeltaTime (); // Calcula quanto tempo se passou desde o ultimo frame
 };
-
-#include <cstdio>
-#include <cstdlib>
-#include <ctime>
-
-#include "Resources.hpp"
-#include "InputManager.hpp"
 
 #endif //_GAME_HPP_
