@@ -17,10 +17,10 @@ class State;
 #   error "Unknown or unsupported compiler"
 #endif
 
-#include "Sprite.hpp"
 #include "GameObject.hpp"
-#include "TileSet.hpp"
+#include "Sprite.hpp"
 #include "TileMap.hpp"
+#include "TileSet.hpp"
 
 // Fase com os penguins
 class State {
@@ -39,12 +39,5 @@ class State {
     TileSet* tileSet; // Imagem com os tiles a ser usado no mapa
     TileMap* tileMap; // O mapa com os indices de cada tile a ser usado
 };
-
-#include <string>
-
-#include "Vec2.hpp"
-#include "Face.hpp"
-#include "InputManager.hpp"
-#include "Camera.hpp"
 
 #endif // _STATE_HPP_
