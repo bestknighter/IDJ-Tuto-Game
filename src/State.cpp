@@ -11,7 +11,7 @@ State::State () : bg ("./resources/img/ocean.jpg") {
     tileSet = new TileSet (64, 64, "./resources/img/tileset.png");
     tileMap = new TileMap ("./resources/map/tileMap.txt", tileSet);
     quitRequested = false;
-    objectArray.emplace_back (new Alien {{512, 300}, 0});
+    objectArray.emplace_back (new Alien {{512, 300}, 3});
 }
 
 State::~State () {
