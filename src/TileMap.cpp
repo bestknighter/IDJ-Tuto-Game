@@ -38,7 +38,7 @@ int& TileMap::At (int x, int y, int z) {
 }
 
 void TileMap::Render (int cameraX, int cameraY, unsigned int firstLayer, unsigned int lastLayer) {
-    for (unsigned int i = firstLayer; i < mapDepth && i <= lastLayer; ++i) {
+    for (int i = firstLayer; i < mapDepth && i <= lastLayer; ++i) {
         RenderLayer (i, cameraX*(i+1), cameraY*(i+1));
     }
 }
@@ -46,8 +46,8 @@ void TileMap::Render (int cameraX, int cameraY, unsigned int firstLayer, unsigne
 void TileMap::RenderLayer (unsigned int layer, int cameraX, int cameraY) {
     int dx = tileSet->GetTileWidth ();
     int dy = tileSet->GetTileHeight ();
-    for (unsigned int j = 0; j < mapHeight; ++j) { // Percorre tile a tile do mapa e renderiza o tile de indice index naquela posicao
-        for (unsigned int i = 0; i < mapWidth; i++) {
+    for (int j = 0; j < mapHeight; ++j) { // Percorre tile a tile do mapa e renderiza o tile de indice index naquela posicao
+        for (int i = 0; i < mapWidth; i++) {
             int index = At(i,j,(int)layer);
             if (index > -1) {
                 tileSet->Render (index, i*dx-cameraX, j*dy-cameraY);
