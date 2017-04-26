@@ -4,7 +4,7 @@ Rect::Rect () : pos(), size() {
 
 }
 
-Rect::Rect (Vec2 pos, Vec2 size) {
+Rect::Rect (Vec2 const& pos, Vec2 const& size) {
     this->pos = pos;
     this->size = size;
 }
@@ -25,12 +25,16 @@ void Rect::SetTamanho (Vec2 const& novoTamanho) {
     size = novoTamanho;
 }
 
-Vec2 Rect::GetTamanho () {
+Vec2 const& Rect::GetTamanho () {
     return size;
 }
 
-Vec2 Rect::GetPosicao () {
+Vec2 const& Rect::GetPosicao () {
     return pos;
+}
+
+void Rect::SetPosicao (Vec2 const& novoPos) {
+    pos = novoPos;
 }
 
 Vec2 Rect::GetCentro () {
