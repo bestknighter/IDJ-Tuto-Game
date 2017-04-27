@@ -31,6 +31,7 @@ class State {
     void LoadAssets ();
     void Update (float dt);
     void Render ();
+    void AddObject (GameObject *ptr);
   private:
     // void AddObject (float mouseX, float mouseY); // Adiciona pinguim
     bool quitRequested;

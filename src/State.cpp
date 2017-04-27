@@ -47,3 +47,7 @@ void State::Render () {
     }
     tileMap->Render(Camera::pos.x, Camera::pos.y, 1); // Por ultimo renderiza o resto do mapa
 }
+
+void State::AddObject (GameObject *ptr) {
+    objectArray.emplace_back (ptr);
+}
