@@ -8,6 +8,7 @@ class Vec2 {
     float x;
     float y;
     Vec2 ();
+    Vec2 (float m);
     Vec2 (float x, float y);
     float GetMagnitude () const;
     float GetRadianos () const;

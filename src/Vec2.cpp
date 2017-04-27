@@ -6,6 +6,11 @@ Vec2::Vec2 () {
     x = y = 0;
 }
 
+Vec2::Vec2 (float m) {
+    x = m;
+    y = m;
+}
+
 Vec2::Vec2 (float x, float y) {
     this->x = x;
     this->y = y;
@@ -16,7 +21,7 @@ float Vec2::GetMagnitude () const {
 }
 
 float Vec2::GetRadianos () const {
-    return atan2 (x, y);
+    return atan2 (y, x);
 }
 
 Vec2 Vec2::FromPolar (float magnitude, float radianos) {
