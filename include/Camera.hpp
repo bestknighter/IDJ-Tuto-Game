@@ -3,7 +3,7 @@
 
 class Camera;
 
-#define BASE_CAM_SPEED 300
+#define BASE_CAM_SPEED 300 // Pixels/s
 
 #include "Vec2.hpp"
 #include "GameObject.hpp"
