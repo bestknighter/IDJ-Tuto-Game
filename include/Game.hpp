@@ -44,4 +44,4 @@ class Game {
     void CalculateDeltaTime (); // Calcula quanto tempo se passou desde o ultimo frame
 };
 
-#endif //_GAME_HPP_
+#endif // _GAME_HPP_

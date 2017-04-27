@@ -21,4 +21,4 @@ class TileSet {
     unsigned int tileHeight;
 };
 
-#endif //_TILESET_HPP_
+#endif // _TILESET_HPP_

@@ -29,4 +29,4 @@ class TileMap {
     unsigned int mapDepth;
 };
 
-#endif //_TILEMAP_HPP_
+#endif // _TILEMAP_HPP_

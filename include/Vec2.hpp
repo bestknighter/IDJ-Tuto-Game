@@ -23,4 +23,4 @@ class Vec2 {
     static float AnguloEntre (Vec2 const& lhs, Vec2 const& rhs); // Produto Angular
 };
 
-#endif //_VEC2_HPP_
+#endif // _VEC2_HPP_
