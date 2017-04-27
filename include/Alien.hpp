@@ -4,7 +4,7 @@
 class Alien;
 
 #define ALIEN_HP 50
-#define ALIEN_SPEED 100
+#define ALIEN_SPEED 100 // Pixels/s
 
 #include <queue>
 #include <vector>
@@ -13,6 +13,8 @@ class Alien;
 #include "Minion.hpp"
 #include "Sprite.hpp"
 #include "Vec2.hpp"
+
+#define ALIEN_ROT_SPEED 2*M_PI*0.033 // Rad/s
 
 class Alien : public GameObject {
   public:
@@ -29,14 +31,15 @@ class Alien : public GameObject {
             SHOOT
         };
         Action (ActionType type, Vec2 destination);
-        ActionType type;
-        Vec2 pos;
+        ActionType type;  // Tipo da acao
+        Vec2 pos; // Destino do tiro/movimento
     };
-    Sprite sp;
-    Vec2 speed;
-    int hp;
-    std::queue<Action> taskQueue;
-    std::vector<Minion> minionArray;
+    Sprite sp; // Imagem do Alien
+    Vec2 speed; // Velocidade de movimento
+    int hp; // Quantidade de vida
+    std::queue<Action> taskQueue; // Fila de atividades para se cumprir
+    std::vector<Minion> minionArray; // Vetor de minions
+    Minion& GetClosestMinion (Vec2 const& pos); // Retorna minion mais proximo do ponto pos
 };
 
 #endif // _ALIEN_HPP_
