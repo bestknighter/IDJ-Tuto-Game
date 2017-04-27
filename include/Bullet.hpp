@@ -3,6 +3,9 @@
 
 class Bullet;
 
+#define BULLET_SPEED 250 // Pixels/s
+#define BULLET_REACH 1000 // Pixels
+
 #include <string>
 
 #include "GameObject.hpp"
@@ -16,9 +19,9 @@ class Bullet : public GameObject {
     void Render (int cameraX, int cameraY);
     bool IsDead ();
   private:
-    Sprite sp;
-    Vec2 speed;
-    float distanceLeft;
+    Sprite sp; // Imagem do tiro
+    Vec2 speed; // Velocidade do projetil
+    float distanceLeft; // "Tempo" de vida restante do projetil
 };
 
 #endif // _BULLET_HPP_
