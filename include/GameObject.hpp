@@ -7,11 +7,13 @@ class GameObject;
 
 class GameObject {
   public:
+    GameObject ();
     virtual ~GameObject ();
     virtual void Update (float dt) = 0; // Atualiza o estado do objeto
     virtual void Render (int cameraX, int cameraY) = 0; // Renderiza esse objeto
     virtual bool IsDead () = 0;
     Rect box; // Rect que armazena a posicao e as dimensoes do objeto
+    float rotation;
 };
 
 #endif // _GAMEOBJECT_HPP_
