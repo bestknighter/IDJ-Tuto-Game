@@ -7,6 +7,7 @@
 #include "Collision.hpp"
 #include "InputManager.hpp"
 #include "Penguins.hpp"
+#include "Resources.hpp"
 #include "Vec2.hpp"
 
 State::State () : bg ("./resources/img/ocean.jpg") {
@@ -28,7 +29,10 @@ bool State::QuitRequested () {
 }
 
 void State::LoadAssets () {
-
+    Resources::GetImage ("./resources/img/minionbullet2.png");
+    Resources::GetImage ("./resources/img/penguinbullet.png");
+    Resources::GetImage ("./resources/img/penguindeath.png");
+    Resources::GetImage ("./resources/img/aliendeath.png");
 }
 
 void State::Update (float dt) {
@@ -45,7 +49,9 @@ void State::Update (float dt) {
 
     // Checa por colisao
     for (int i = 0; i < objectArray.size ()-1; ++i) {
+        if (objectArray[i]->Is ("Animation")) continue; 
         for (int j = i+1; j < objectArray.size (); j++) {
+            if (objectArray[j]->Is ("Animation")) continue;
             if (Collision::IsColliding (objectArray[i]->box, objectArray[j]->box, objectArray[i]->rotation, objectArray[j]->rotation)) {
                 // Se houver colisao, notifica ambos
                 objectArray[i]->NotifyCollision (*objectArray[j]);
