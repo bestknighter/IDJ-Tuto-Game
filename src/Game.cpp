@@ -9,7 +9,7 @@
 
 Game* Game::instance = nullptr;
 
-Game::Game (std::string title, Vec2 size) {
+Game::Game (std::string title, Vec2 const& size) {
     if (instance == nullptr) {
         instance = this;
     }
@@ -99,11 +99,24 @@ float Game::GetDeltaTime () {
 }
 
 void Game::CalculateDeltaTime () {
-    int newFrameStart = SDL_GetTicks ();
-    dt = (newFrameStart - frameStart)/1000.0;
+    dt = (SDL_GetTicks () - frameStart)/1000.0;
     #if DEBUG
     // Printa o FPS imediato em que o jogo esta rodando
     // printf ("%f FPS\n", 1.0/dt);
     #endif // DEBUG
     frameStart = SDL_GetTicks ();
+}
+
+const Vec2 Game::GetScreenSize () {
+    if (nullptr == window) {
+        return Vec2(0,0);
+    }
+    int w = 0;
+    int h = 0;
+    SDL_GetWindowSize (window, &w, &h);
+    return Vec2 (w, h);
+}
+
+void Game::SetScreenSize (Vec2 const& newSize) {
+    SDL_SetWindowSize (window, (int)newSize.x, (int)newSize.y);
 }

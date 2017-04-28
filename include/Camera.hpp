@@ -3,7 +3,7 @@
 
 class Camera;
 
-#define BASE_CAM_SPEED 300 // Pixels/s
+#define BASE_CAM_SPEED 350 // Pixels/s
 
 #include "Vec2.hpp"
 #include "GameObject.hpp"
@@ -16,6 +16,7 @@ class Camera {
     static Vec2 pos; // Posicao da camera
     static Vec2 speed; // Velocidade da camera
   private:
+    static bool following; // Verdadeiro se eh para continuar seguindo o foco
     static GameObject* focus; // Foco da camera
 };
 

@@ -26,13 +26,15 @@ class Game;
 
 class Game {
   public:
-    Game (std::string title, Vec2 size);
+    Game (std::string title, Vec2 const& size);
     ~Game ();
     void Run (); // Game Loop
     SDL_Renderer* GetRenderer ();
     State& GetState ();
     static Game& GetInstance ();
     float GetDeltaTime ();
+    const Vec2 GetScreenSize (); // Retorna o tamanho da tela
+    void SetScreenSize (Vec2 const& newSize); // Modifica o tamanho da tela
   private:
     static Game* instance; // Instancia do Game (por ser um singleton)
     SDL_Window* window = nullptr; // A janela a ser usada para exibicao
