@@ -14,9 +14,15 @@ Sprite::Sprite () {
     width = 0;
     height = 0;
     scale = Vec2 (1,1);
+    frameTime = 0;
+    frameCount = 1;
+    currentFrame = (unsigned int) -1;
+    elapsedTime = 0;
 }
 
-Sprite::Sprite (std::string file) : Sprite () {
+Sprite::Sprite (std::string file, unsigned int frameCount, float frameTime) : Sprite () {
+    this->frameCount = frameCount > 1 ? frameCount : 1;
+    this->frameTime = frameTime;
     Open (file);
 }
 
@@ -27,7 +33,7 @@ Sprite::~Sprite () {
 void Sprite::Open (std::string file) {
     texture = Resources::GetImage (file);
     SDL_QueryTexture (texture, nullptr, nullptr, &width, &height);
-    SetClip (0, 0, width, height);
+    SetClip (0, 0, width/frameCount, height);
 }
 
 void Sprite::SetClip (int x, int y, int w, int h) {
@@ -35,6 +41,27 @@ void Sprite::SetClip (int x, int y, int w, int h) {
     clipRect.y = y;
     clipRect.w = w;
     clipRect.h = h;
+}
+
+void Sprite::Update (float dt) {
+    elapsedTime += dt;
+    if (elapsedTime>frameTime) {
+        SetFrame (currentFrame + 1);
+        elapsedTime = 0;
+    }
+}
+
+void Sprite::SetFrame (unsigned int frame) {
+    currentFrame = frame < frameCount ? frame : 0;
+    SetClip (currentFrame*width/frameCount, 0, width/frameCount, height);
+}
+
+void Sprite::SetFrameCount (unsigned int frameCount) {
+    this->frameCount = frameCount;
+}
+
+void Sprite::SetFrameTime (float frameTime) {
+    this->frameTime = frameTime;
 }
 
 void Sprite::Render (int x, int y, float angle) {
@@ -49,7 +76,7 @@ void Sprite::Render (int x, int y, float angle) {
 }
 
 int Sprite::GetWidth () {
-    return clipRect.w*scale.x;
+    return (clipRect.w/frameCount)*scale.x;
 }
 
 int Sprite::GetHeight () {

@@ -24,11 +24,15 @@ class Sprite;
 class Sprite {
   public:
     Sprite ();
-    Sprite (std::string file);
+    Sprite (std::string file, unsigned int frameCount = 1, float frameTime = 1);
     ~Sprite ();
     void Open (std::string file); // Carrega um imagem para esse sprite
     void SetClip (int x, int y, int w, int h); // Seta a regiao de interesse (ROI - Region of Interest) da imagem
     void Render (int x, int y, float angle = 0); // Renderiza a ROI na posicao fornecida
+    void Update (float dt);
+    void SetFrame (unsigned int frame);
+    void SetFrameCount (unsigned int frameCount);
+    void SetFrameTime (float frameTime);
     int GetWidth ();
     int GetHeight ();
     bool IsOpen ();
@@ -39,6 +43,10 @@ class Sprite {
     int height = 0;
     SDL_Rect clipRect; // ROI da imagem
     Vec2 scale;
+    unsigned int frameCount;
+    unsigned int currentFrame;
+    float elapsedTime;
+    float frameTime;
 };
 
 #endif // _SPRITE_HPP_
