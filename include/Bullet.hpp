@@ -14,7 +14,7 @@ class Bullet;
 
 class Bullet : public GameObject {
   public:
-    Bullet (Vec2 pos, float angle, float speed, float maxDistance, std::string sprite);
+    Bullet (Vec2 pos, float angle, float speed, float maxDistance, std::string sprite, unsigned int frameCount = 1, float frameTime = 0.2);
     void Update (float dt);
     void Render (int cameraX, int cameraY);
     bool IsDead ();
