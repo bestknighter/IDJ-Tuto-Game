@@ -18,7 +18,7 @@ class Vec2 {
     Vec2 operator- (Vec2 const& other) const;
     Vec2 operator* (float other) const;
     Vec2 operator/ (float other) const;
-    Vec2 GetNormal () const;
+    Vec2 GetNormal () const; // Retorna uma versao normalizada
     Vec2 Rotate (float radianos) const; // Rotaciona o vetor
     static float Dot (Vec2 const& lhs, Vec2 const& rhs); // Produto Vetorial
     static float AnguloEntre (Vec2 const& lhs, Vec2 const& rhs); // Produto Angular
