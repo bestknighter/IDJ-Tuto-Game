@@ -2,6 +2,7 @@
 
 #include <cfloat>
 
+#include "Animation.hpp"
 #include "Bullet.hpp"
 #include "Camera.hpp"
 #include "Game.hpp"
@@ -82,6 +83,11 @@ void Alien::NotifyCollision (GameObject const& other) {
         Bullet b = dynamic_cast <Bullet const&> (other);
         if (!b.targetsPlayer) {
             hp -= b.GetDamage ();
+            if (hp <= 0) {
+                Sprite sp ("./resources/img/aliendeath.png", 4, 0.1);
+                Animation *anim = new Animation (box.GetCentro () - Vec2 (50, 10), rotation, sp, 0.4, true); // Nao sei pq a sprite esta levemente desalinhada, esse -(50,10) eh para corrigir. Obtido no olhometro
+                Game::GetInstance ().GetState ().AddObject (anim);
+            }
         }
     }
 }
