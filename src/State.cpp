@@ -5,12 +5,16 @@
 #include "Alien.hpp"
 #include "Camera.hpp"
 #include "InputManager.hpp"
+#include "Penguins.hpp"
 #include "Vec2.hpp"
 
 State::State () : bg ("./resources/img/ocean.jpg") {
     tileSet = new TileSet (64, 64, "./resources/img/tileset.png");
     tileMap = new TileMap ("./resources/map/tileMap.txt", tileSet);
     quitRequested = false;
+    Penguins *p = new Penguins ({704, 640});
+    objectArray.emplace_back (p);
+    Camera::Follow (p);
     objectArray.emplace_back (new Alien {{512, 300}, 3});
 }
 
