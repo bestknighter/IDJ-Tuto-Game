@@ -21,7 +21,7 @@ Sprite::Sprite () {
 }
 
 Sprite::Sprite (std::string file, unsigned int frameCount, float frameTime) : Sprite () {
-    this->frameCount = frameCount > 1 ? frameCount : 1;
+    this->frameCount = frameCount > 1 ? frameCount : 1; // frameCount sera sempre no minimo 1
     this->frameTime = frameTime;
     Open (file);
 }

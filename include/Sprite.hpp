@@ -30,7 +30,7 @@ class Sprite {
     void SetClip (int x, int y, int w, int h); // Seta a regiao de interesse (ROI - Region of Interest) da imagem
     void Render (int x, int y, float angle = 0); // Renderiza a ROI na posicao fornecida
     void Update (float dt);
-    void SetFrame (unsigned int frame);
+    void SetFrame (unsigned int frame); // Seta manualmente o frame a ser mostrado
     void SetFrameCount (unsigned int frameCount);
     void SetFrameTime (float frameTime);
     int GetWidth ();
