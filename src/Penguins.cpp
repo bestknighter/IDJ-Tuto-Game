@@ -42,7 +42,7 @@ void Penguins::Update (float dt) {
         linearSpeed += PLAYER_ACCELERATION*dt;
     }
     if (IMinstance.IsKeyDown (S_KEY)) {
-        linearSpeed -= PLAYER_ACCELERATION*dt;
+        linearSpeed -= (2 - (-P_PRECISION_MOV_THRES < linearSpeed && linearSpeed < P_PRECISION_MOV_THRES)*1.7)*PLAYER_ACCELERATION*dt;
     }
     if (IMinstance.IsKeyDown (D_KEY)) {
         rotation += PLAYER_ROT_SPEED*dt;
@@ -51,7 +51,8 @@ void Penguins::Update (float dt) {
         rotation -= PLAYER_ROT_SPEED*dt;
     }
 
-    speed = Vec2::FromPolar (linearSpeed, rotation);
+    linearSpeed = linearSpeed < PLAYER_MAX_SPEED ? linearSpeed : PLAYER_MAX_SPEED;
+    speed = Vec2::FromPolar (linearSpeed > PLAYER_MIN_SPEED ? linearSpeed : 0, rotation);
     box.SetPosicao (box.GetPosicao ()+speed*dt);
 
     Vec2 mouseRelPos (IMinstance.GetMouseX (), IMinstance.GetMouseY ());
@@ -62,7 +63,7 @@ void Penguins::Update (float dt) {
 void Penguins::Render (int cameraX, int cameraY) {
     Vec2 boxPos = box.GetPosicao ();
     bodySp.Render (boxPos.x - cameraX, boxPos.y - cameraY, rotation);
-    cannonSp.Render (boxPos.x - cameraX+17, boxPos.y - cameraY+5, cannonAngle); // Nao sei pq a sprite esta levemente desalinhada, esse (+17,+5) eh para corrigir. Obtido no olhometro
+    cannonSp.Render (boxPos.x - cameraX, boxPos.y - cameraY, cannonAngle);
 }
 
 bool Penguins::IsDead () {
@@ -90,7 +91,7 @@ bool Penguins::Is (std::string type) const {
 }
 
 void Penguins::Shoot () {
-    Vec2 bulletPos = Vec2::FromPolar (P_BULLET_OFFSET, cannonAngle);
+    Vec2 bulletPos = Vec2::FromPolar (P_BULLET_OFFSET, cannonAngle) - Vec2 (17,5); // Nao sei pq a sprite esta levemente desalinhada, esse -(17,5) eh para corrigir. Obtido no olhometro
     Bullet *b = new Bullet (box.GetCentro ()+bulletPos, cannonAngle, BULLET_SPEED*1.2, BULLET_REACH*2, "./resources/img/penguinbullet.png", false, BULLET_DAMAGE, 4, 0.25);
     Game::GetInstance ().GetState ().AddObject (b);
 }
