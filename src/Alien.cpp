@@ -9,7 +9,8 @@
 #include "InputManager.hpp"
 
 Alien::Alien (Vec2 pos, int nMinions) : sp ("./resources/img/alien.png") {
-    box = Rect ( pos, Vec2 (sp.GetWidth (), sp.GetHeight ()) );
+    Vec2 size = Vec2 (sp.GetWidth (), sp.GetHeight ());
+    box = Rect (pos - size/2, size);
     speed = {0,0};
     hp = ALIEN_HP;
     
