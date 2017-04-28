@@ -27,11 +27,13 @@ class Alien : public GameObject {
     bool IsDead ();
     void NotifyCollision (GameObject const& other);
     bool Is (std::string type) const;
+    void Shoot ();
     static int alienCount;
   private:
     enum AlienState {MOVING, RESTING};
     AlienState state;
     Timer restTimer;
+    Timer shootTimer;
     Vec2 destination;
     Sprite sp; // Imagem do Alien
     Vec2 speed; // Velocidade de movimento

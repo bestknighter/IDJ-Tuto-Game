@@ -17,6 +17,7 @@ Alien::Alien (Vec2 pos, int nMinions) : sp ("./resources/img/alien.png") {
     speed = {0,0};
     hp = ALIEN_HP*(1+nMinions*0.2); // Cada minion acrescenta 20% de hp base ao Alien
     restTimer = Timer ();
+    shootTimer = Timer ();
     state = AlienState::RESTING;
     
     for (int i = 0; i < nMinions; ++i) {
@@ -33,6 +34,15 @@ Alien::~Alien () {
 void Alien::Update (float dt) {
     // Handle Actions
     restTimer.Update (dt);
+
+    // Descomente aqui para o alien andar e atirar ao mesmo tempo
+    // shootTimer.Update (dt);
+
+    // if (shootTimer.Get () > ALIEN_ACTION_COOLDOWN*0.5) {
+    //     Shoot ();
+    //     shootTimer.Restart ();
+    // }
+
     switch (state) {
         case AlienState::RESTING: {
             if (restTimer.Get () > ALIEN_ACTION_COOLDOWN && nullptr != Penguins::player) {
@@ -96,6 +106,11 @@ bool Alien::Is (std::string type) const {
     return "Alien" == type;
 }
 
+void Alien::Shoot () {
+    // So atira se existir pelo menos um minion para fazer isso
+    if (minionArray.size () > 0 && nullptr != Penguins::player) {
+        GetClosestMinion (Penguins::player->box.GetCentro ()).Shoot (Penguins::player->box.GetCentro ());
+    }
 }
 
 Minion& Alien::GetClosestMinion (Vec2 const& pos) {
