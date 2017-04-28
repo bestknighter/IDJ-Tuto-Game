@@ -23,6 +23,8 @@ class Alien : public GameObject {
     void Update (float dt);
     void Render (int cameraX, int cameraY);
     bool IsDead ();
+    void NotifyCollision (GameObject const& other);
+    bool Is (std::string type) const;
   private:
     class Action {
       public:

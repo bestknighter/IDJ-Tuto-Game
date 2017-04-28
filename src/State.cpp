@@ -4,6 +4,7 @@
 
 #include "Alien.hpp"
 #include "Camera.hpp"
+#include "Collision.hpp"
 #include "InputManager.hpp"
 #include "Penguins.hpp"
 #include "Vec2.hpp"
@@ -41,6 +42,18 @@ void State::Update (float dt) {
             objectArray.erase (objectArray.begin () + i);
         }
     }
+
+    // Checa por colisao
+    for (int i = 0; i < objectArray.size ()-1; ++i) {
+        for (int j = i+1; j < objectArray.size (); j++) {
+            if (Collision::IsColliding (objectArray[i]->box, objectArray[j]->box, objectArray[i]->rotation, objectArray[j]->rotation)) {
+                // Se houver colisao, notifica ambos
+                objectArray[i]->NotifyCollision (*objectArray[j]);
+                objectArray[j]->NotifyCollision (*objectArray[i]);
+            }
+        }
+    }
+
 }
 
 void State::Render () {

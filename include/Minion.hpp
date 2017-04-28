@@ -17,6 +17,8 @@ class Minion : public GameObject {
     void Update (float dt);
     void Render (int cameraX, int cameraY);
     bool IsDead ();
+    void NotifyCollision (GameObject const& other);
+    bool Is (std::string type) const;
     void Shoot (Vec2 const& target); // Atira um projetil em direcao a target
   private:
     GameObject* center; // Centro do Alien

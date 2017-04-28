@@ -1,6 +1,7 @@
 #include "Penguins.hpp"
 
 #include "Bullet.hpp"
+#include "Camera.hpp"
 #include "Game.hpp"
 #include "InputManager.hpp"
 
@@ -18,6 +19,8 @@ Penguins::Penguins (Vec2 const& pos) : GameObject () {
     box = {pos - size/2, size};
     linearSpeed = 0;
     cannonAngle = 0;
+    shootCooldown = Timer ();
+    shootCooldown.Update (P_SHOOT_COOLDOWN); // Permite ja dar um tiro logo assim que o jogo comeca
 }
 
 Penguins::~Penguins () {
@@ -25,8 +28,14 @@ Penguins::~Penguins () {
 }
 
 void Penguins::Update (float dt) {
+    shootCooldown.Update (dt);
+
+    // Handle Input
     if (IMinstance.MousePress (LEFT_MOUSE_BUTTON)) {
-        Shoot ();
+        if (shootCooldown.Get () >= P_SHOOT_COOLDOWN) {
+            Shoot ();
+            shootCooldown.Restart ();
+        }
     }
     if (IMinstance.IsKeyDown (W_KEY)) {
         linearSpeed += PLAYER_ACCELERATION*dt;
@@ -40,24 +49,44 @@ void Penguins::Update (float dt) {
     if (IMinstance.IsKeyDown (A_KEY)) {
         rotation -= PLAYER_ROT_SPEED*dt;
     }
+
     speed = Vec2::FromPolar (linearSpeed, rotation);
     box.SetPosicao (box.GetPosicao ()+speed*dt);
 
-    cannonAngle = (Vec2 (IMinstance.GetMouseX (), IMinstance.GetMouseY ()) - box.GetCentro ()).GetRadianos ();
+    Vec2 mouseRelPos (IMinstance.GetMouseX (), IMinstance.GetMouseY ());
+    mouseRelPos = mouseRelPos - box.GetCentro () + Camera::pos;
+    cannonAngle = mouseRelPos.GetRadianos ();
 }
 
 void Penguins::Render (int cameraX, int cameraY) {
     Vec2 boxPos = box.GetPosicao ();
     bodySp.Render (boxPos.x - cameraX, boxPos.y - cameraY, rotation);
-    cannonSp.Render (boxPos.x - cameraX, boxPos.y - cameraY, cannonAngle);
+    cannonSp.Render (boxPos.x - cameraX+17, boxPos.y - cameraY+5, cannonAngle); // Nao sei pq a sprite esta levemente desalinhada, esse (+17,+5) eh para corrigir. Obtido no olhometro
 }
 
 bool Penguins::IsDead () {
-    return hp < 0;
+    if (hp < 0) {
+        Camera::Unfollow ();
+        return true;
+    }
+    return false;
+}
+
+void Penguins::NotifyCollision (GameObject const& other) {
+    if (other.Is ("Bullet")) {
+        Bullet b = dynamic_cast <Bullet const&> (other);
+        if (b.targetsPlayer) {
+            hp -= b.GetDamage ();
+        }
+    }
+}
+
+bool Penguins::Is (std::string type) const {
+    return "Penguins" == type;
 }
 
 void Penguins::Shoot () {
     Vec2 bulletPos = Vec2::FromPolar (P_BULLET_OFFSET, cannonAngle);
-    Bullet *b = new Bullet (box.GetCentro (), cannonAngle, BULLET_SPEED*1.1, BULLET_REACH*1.1, "./resources/img/penguinbullet.png", 4, 0.1);
+    Bullet *b = new Bullet (box.GetCentro ()+bulletPos, cannonAngle, BULLET_SPEED*1.2, BULLET_REACH*2, "./resources/img/penguinbullet.png", false, BULLET_DAMAGE, 4, 0.25);
     Game::GetInstance ().GetState ().AddObject (b);
 }

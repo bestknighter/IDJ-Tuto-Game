@@ -1,6 +1,6 @@
 #include "Minion.hpp"
 
-#include <cstdlib>
+#include <cstdlib> // std::rand() e RAND_MAX
 
 #include "Bullet.hpp"
 #include "Game.hpp"
@@ -34,6 +34,14 @@ bool Minion::IsDead () {
 }
 
 void Minion::Shoot (Vec2 const& pos) {
-    Bullet *b = new Bullet (box.GetCentro (), (pos - box.GetCentro ()).GetRadianos (), BULLET_SPEED, BULLET_REACH, "./resources/img/minionbullet2.png", 3, 0.1);
+    Bullet *b = new Bullet (box.GetCentro (), (pos - box.GetCentro ()).GetRadianos (), BULLET_SPEED, BULLET_REACH, "./resources/img/minionbullet2.png", true, BULLET_DAMAGE, 3, 0.1);
     Game::GetInstance ().GetState ().AddObject (b);
+}
+
+void Minion::NotifyCollision (GameObject const& other) {
+
+}
+
+bool Minion::Is (std::string type) const {
+    return "Minion" == type;
 }

@@ -1,8 +1,8 @@
+#include "Alien.hpp"
 
 #include <cfloat>
 
-#include "Alien.hpp"
-
+#include "Bullet.hpp"
 #include "Camera.hpp"
 #include "InputManager.hpp"
 
@@ -10,7 +10,7 @@ Alien::Alien (Vec2 pos, int nMinions) : sp ("./resources/img/alien.png") {
     Vec2 size = Vec2 (sp.GetWidth (), sp.GetHeight ());
     box = Rect (pos - size/2, size);
     speed = {0,0};
-    hp = ALIEN_HP;
+    hp = ALIEN_HP*(1+nMinions*0.2); // Cada minion acrescenta 20% de hp base ao Alien
     
     for (int i = 0; i < nMinions; ++i) {
         minionArray.emplace_back (this, i*2*M_PI/nMinions);
@@ -28,13 +28,15 @@ void Alien::Update (float dt) {
 
         if (IMinstance.MousePress (LEFT_MOUSE_BUTTON)) {
             taskQueue.emplace (Action::ActionType::SHOOT, posMouse);
-            taskQueue.push (taskQueue.front ()); // Grantindo que SHOOT sempre sera o primeiro item na fila
+            // Garantindo que SHOOT sempre sera o primeiro item na fila
+            taskQueue.push (taskQueue.front ());
             taskQueue.pop ();
         }
         
         if (IMinstance.MousePress (RIGHT_MOUSE_BUTTON)) {
             if (!taskQueue.empty () && taskQueue.back ().type == Action::ActionType::MOVE) {
-                taskQueue.back ().pos = posMouse; // Caso  a ultima acao seja de mover, simplemente atualize o destino
+                // Caso  a ultima acao seja de mover, simplemente atualize o destino
+                taskQueue.back ().pos = posMouse;
             } else {
                 taskQueue.emplace (Action::ActionType::MOVE, posMouse);
             }
@@ -50,6 +52,7 @@ void Alien::Update (float dt) {
             {
                 Vec2 moveDist = current.pos - box.GetCentro ();
                 if (moveDist.GetMagnitude () <= ALIEN_SPEED*dt) {
+                    // Vai para a posicao final caso o que falte para andar seja menos do que a velocidade
                     box.Mover (moveDist);
                     taskQueue.pop ();
                 } else {
@@ -60,7 +63,10 @@ void Alien::Update (float dt) {
 
             case Action::ActionType::SHOOT:
             {
-                GetClosestMinion (current.pos).Shoot (current.pos);
+                if (minionArray.size () > 0) {
+                    // So atira se existe pelo menos um minion para fazer isso
+                    GetClosestMinion (current.pos).Shoot (current.pos);
+                }
                 taskQueue.pop ();
                 break;
             }
@@ -89,6 +95,19 @@ bool Alien::IsDead () {
     return hp <= 0;
 }
 
+void Alien::NotifyCollision (GameObject const& other) {
+    if (other.Is ("Bullet")) {
+        Bullet b = dynamic_cast <Bullet const&> (other);
+        if (!b.targetsPlayer) {
+            hp -= b.GetDamage ();
+        }
+    }
+}
+
+bool Alien::Is (std::string type) const {
+    return "Alien" == type;
+}
+
 Alien::Action::Action (ActionType type, Vec2 destination) {
     this->type = type;
     pos = destination;
@@ -97,7 +116,7 @@ Alien::Action::Action (ActionType type, Vec2 destination) {
 Minion& Alien::GetClosestMinion (Vec2 const& pos) {
     int closest = 0;
     float smallestDistance = FLT_MAX;
-    for (int i = 0; i < minionArray.size (); ++i) {
+    for (unsigned int i = 0; i < minionArray.size (); ++i) {
         float distance = (pos - minionArray[i].box.GetPosicao ()).GetMagnitude ();
         if (distance < smallestDistance) {
             smallestDistance = distance;
