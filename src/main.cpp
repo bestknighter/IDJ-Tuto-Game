@@ -1,7 +1,3 @@
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunused-parameter"
-#warning "Remove all pragmas for final release"
-
 #include <cstdio>
 
 #ifdef _WIN32
@@ -44,5 +40,3 @@ int main(int argc, char* argv[]) {
     
     return 0;
 }
-
-#pragma GCC diagnostic pop

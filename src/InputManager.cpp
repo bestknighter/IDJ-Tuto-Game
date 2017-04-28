@@ -1,7 +1,3 @@
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunused-parameter"
-#pragma GCC diagnostic ignored "-Wreturn-type"
-
 #include "InputManager.hpp"
 
 void InputManager::Update () {
@@ -96,4 +92,3 @@ InputManager& InputManager::operator= (const InputManager& im) {
 InputManager::~InputManager () {
 
 }
-#pragma GCC diagnostic pop

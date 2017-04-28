@@ -1,5 +1,3 @@
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunused-parameter"
 
 #include <cfloat>
 
@@ -108,5 +106,3 @@ Minion& Alien::GetClosestMinion (Vec2 const& pos) {
     }
     return minionArray[closest];
 }
-
-#pragma GCC diagnostic pop
