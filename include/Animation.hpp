@@ -12,7 +12,7 @@ class Animation;
 
 class Animation : public GameObject {
   public:
-    Animation (Vec2 pos, float rotation, Sprite const& sprite, float timeLimit, bool ends);
+    Animation (Vec2 pos, float rotation, std::string sprite, unsigned int frameCount, float frameTime, bool ends);
     void Update (float dt);
     void Render (int cameraX, int cameraY);
     bool IsDead ();

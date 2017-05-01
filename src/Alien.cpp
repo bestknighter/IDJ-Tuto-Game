@@ -34,22 +34,21 @@ Alien::~Alien () {
 void Alien::Update (float dt) {
     // Handle Actions
     restTimer.Update (dt);
+    shootTimer.Update (dt);
 
-    // Descomente aqui para o alien andar e atirar ao mesmo tempo
-    // shootTimer.Update (dt);
-
-    // if (shootTimer.Get () > ALIEN_ACTION_COOLDOWN*0.5) {
-    //     Shoot ();
-    //     shootTimer.Restart ();
-    // }
+    // Aqui ele atira constantemente
+    // Shoot ();
 
     switch (state) {
         case AlienState::RESTING: {
-            if (restTimer.Get () > ALIEN_ACTION_COOLDOWN && nullptr != Penguins::player) {
+            if (restTimer.Get () > ALIEN_MOVE_COOLDOWN && nullptr != Penguins::player) {
                 destination = Penguins::player->box.GetCentro ();
-                Shoot (); // Comente isto e descomente acima para fazer o alien andar e atirar ao mesmo tempo
+                // Aqui ele atira assim que for voltar a andar
+                // Shoot ();
                 state = AlienState::MOVING;
-            }       
+            }
+            // Aqui ele atira enquanto estiver parado
+            Shoot ();
             break;
         }
         case AlienState::MOVING: {
@@ -58,10 +57,14 @@ void Alien::Update (float dt) {
                 // Vai para a posicao final caso o que falte para andar seja menos do que a velocidade
                 box.Mover (moveDist);
                 state = AlienState::RESTING;
+                // Aqui ele atira assim que para de andar
+                // Shoot ();
                 restTimer.Restart ();
             } else {
                 box.Mover ( moveDist.GetNormal ()*(ALIEN_SPEED*dt) );
             }
+            // Aqui ele atira enquanto anda
+            // Shoot ();
             break;
         }
 
@@ -85,7 +88,13 @@ void Alien::Render (int cameraX, int cameraY) {
 }
 
 bool Alien::IsDead () {
-    return hp <= 0;
+    if (hp <= 0) {
+        // Nao sei pq a sprite esta levemente desalinhada, esse -(50,10) eh para corrigir. Obtido no olhometro
+        Animation *anim = new Animation (box.GetCentro () - Vec2 (50, 10), rotation, "./resources/img/aliendeath.png", 4, 0.1, true);
+        Game::GetInstance ().GetState ().AddObject (anim);
+        return true;
+    }
+    return false;
 }
 
 void Alien::NotifyCollision (GameObject const& other) {
@@ -93,11 +102,6 @@ void Alien::NotifyCollision (GameObject const& other) {
         Bullet b = dynamic_cast <Bullet const&> (other);
         if (!b.targetsPlayer) {
             hp -= b.GetDamage ();
-            if (hp <= 0) {
-                Sprite sp ("./resources/img/aliendeath.png", 4, 0.1);
-                Animation *anim = new Animation (box.GetCentro () - Vec2 (50, 10), rotation, sp, 0.4, true); // Nao sei pq a sprite esta levemente desalinhada, esse -(50,10) eh para corrigir. Obtido no olhometro
-                Game::GetInstance ().GetState ().AddObject (anim);
-            }
         }
     }
 }
@@ -107,9 +111,12 @@ bool Alien::Is (std::string type) const {
 }
 
 void Alien::Shoot () {
-    // So atira se existir pelo menos um minion para fazer isso
-    if (minionArray.size () > 0 && nullptr != Penguins::player) {
-        GetClosestMinion (Penguins::player->box.GetCentro ()).Shoot (Penguins::player->box.GetCentro ());
+    if (shootTimer.Get () > ALIEN_SHOOT_COOLDOWN) {
+        // So atira se existir pelo menos um minion para fazer isso
+        if (minionArray.size () > 0 && nullptr != Penguins::player) {
+            GetClosestMinion (Penguins::player->box.GetCentro ()).Shoot (Penguins::player->box.GetCentro ());
+        }
+        shootTimer.Restart ();
     }
 }
 

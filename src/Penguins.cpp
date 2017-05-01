@@ -69,8 +69,8 @@ void Penguins::Render (int cameraX, int cameraY) {
 bool Penguins::IsDead () {
     if (hp <= 0) {
         Camera::Unfollow ();
-        Sprite sp ("./resources/img/penguindeath.png", 5, 0.1);
-        Animation *anim = new Animation (box.GetCentro () - Vec2 (50, 10), rotation, sp, 0.5, true); // Nao sei pq a sprite esta levemente desalinhada, esse -(50,10) eh para corrigir. Obtido no olhometro
+        // Nao sei pq a sprite esta levemente desalinhada, esse -(50,10) eh para corrigir. Obtido no olhometro
+        Animation *anim = new Animation (box.GetCentro () - Vec2 (50, 10), rotation, "./resources/img/penguindeath.png", 5, 0.1, true);
         Game::GetInstance ().GetState ().AddObject (anim);
         return true;
     }

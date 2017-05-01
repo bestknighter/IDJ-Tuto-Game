@@ -1,10 +1,9 @@
 #include "Animation.hpp"
 
-Animation::Animation (Vec2 pos, float rotation, Sprite const& sprite, float timeLimit, bool ends) {
+Animation::Animation (Vec2 pos, float rotation, std::string sprite, unsigned int frameCount, float frameTime, bool ends) : sp (sprite, frameCount, frameTime) {
     this->rotation = rotation;
-    this->timeLimit = timeLimit;
+    this->timeLimit = frameCount*frameTime;
     oneTimeOnly = ends;
-    sp = sprite;
 
     Vec2 size (sp.GetWidth (), sp.GetHeight ());
     box = {pos-size/2, size};
