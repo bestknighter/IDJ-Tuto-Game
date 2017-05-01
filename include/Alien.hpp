@@ -16,7 +16,8 @@ class Alien;
 #include "Vec2.hpp"
 
 #define ALIEN_ROT_SPEED 2*M_PI*0.033 // Rad/s
-#define ALIEN_ACTION_COOLDOWN 1 // s
+#define ALIEN_MOVE_COOLDOWN 1 // s
+#define ALIEN_SHOOT_COOLDOWN 0.33 //s
 
 class Alien : public GameObject {
   public:
