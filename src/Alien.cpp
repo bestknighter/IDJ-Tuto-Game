@@ -89,9 +89,17 @@ void Alien::Render (int cameraX, int cameraY) {
 
 bool Alien::IsDead () {
     if (hp <= 0) {
-        // Nao sei pq a sprite esta levemente desalinhada, esse -(50,10) eh para corrigir. Obtido no olhometro
+        // Nao sei pq a sprite esta levemente desalinhada, esse -(50,10) eh para corrigir. Obtido no olhometro 
         Animation *anim = new Animation (box.GetCentro () - Vec2 (50, 10), rotation, "./resources/img/aliendeath.png", 4, 0.1, true);
         Game::GetInstance ().GetState ().AddObject (anim);
+        
+        for (unsigned int i = 0; i < minionArray.size(); ++i) {
+            Vec2 pos = minionArray[i].box.GetCentro ();
+            float rotation = minionArray[i].rotation;
+            anim = new Animation (pos, rotation, "./resources/img/miniondeath.png", 4, 0.1, true);
+            Game::GetInstance ().GetState ().AddObject (anim);
+        }
+
         return true;
     }
     return false;

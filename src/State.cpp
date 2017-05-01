@@ -33,6 +33,7 @@ void State::LoadAssets () {
     Resources::GetImage ("./resources/img/penguinbullet.png");
     Resources::GetImage ("./resources/img/penguindeath.png");
     Resources::GetImage ("./resources/img/aliendeath.png");
+    Resources::GetImage ("./resources/img/miniondeath.png");
 }
 
 void State::Update (float dt) {

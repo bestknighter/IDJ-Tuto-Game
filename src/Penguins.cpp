@@ -5,6 +5,7 @@
 #include "Camera.hpp"
 #include "Game.hpp"
 #include "InputManager.hpp"
+#include <iostream>
 
 Penguins* Penguins::player = nullptr;
 
@@ -31,18 +32,19 @@ Penguins::~Penguins () {
 void Penguins::Update (float dt) {
     shootCooldown.Update (dt);
 
+    if (linearSpeed <= -PLAYER_MIN_SPEED || PLAYER_MIN_SPEED <= linearSpeed) {
+        linearSpeed -= (linearSpeed >= 0 ? PLAYER_FRICTION : -PLAYER_FRICTION )*dt;
+    }
+
     // Handle Input
     if (IMinstance.MousePress (LEFT_MOUSE_BUTTON)) {
-        if (shootCooldown.Get () >= P_SHOOT_COOLDOWN) {
-            Shoot ();
-            shootCooldown.Restart ();
-        }
+        Shoot ();
     }
     if (IMinstance.IsKeyDown (W_KEY)) {
-        linearSpeed += PLAYER_ACCELERATION*dt;
+        linearSpeed += (PLAYER_ACCELERATION + PLAYER_FRICTION)*dt;
     }
     if (IMinstance.IsKeyDown (S_KEY)) {
-        linearSpeed -= (2 - (-P_PRECISION_MOV_THRES < linearSpeed && linearSpeed < P_PRECISION_MOV_THRES)*1.7)*PLAYER_ACCELERATION*dt;
+        linearSpeed -= (PLAYER_ACCELERATION + PLAYER_FRICTION)*dt;
     }
     if (IMinstance.IsKeyDown (D_KEY)) {
         rotation += PLAYER_ROT_SPEED*dt;
@@ -51,8 +53,16 @@ void Penguins::Update (float dt) {
         rotation -= PLAYER_ROT_SPEED*dt;
     }
 
-    linearSpeed = linearSpeed < PLAYER_MAX_SPEED ? linearSpeed : PLAYER_MAX_SPEED;
-    speed = Vec2::FromPolar (linearSpeed > PLAYER_MIN_SPEED ? linearSpeed : 0, rotation);
+    float actualSpeed = linearSpeed;
+    if (PLAYER_MAX_SPEED < linearSpeed) {
+        actualSpeed = linearSpeed = PLAYER_MAX_SPEED;
+    } else if (-PLAYER_MIN_SPEED < linearSpeed && linearSpeed < PLAYER_MIN_SPEED) {
+        actualSpeed = 0;
+    } else if (linearSpeed < -PLAYER_MAX_SPEED) {
+        actualSpeed = linearSpeed = -PLAYER_MAX_SPEED;
+    }
+
+    speed = Vec2::FromPolar (actualSpeed, rotation);
     box.SetPosicao (box.GetPosicao ()+speed*dt);
 
     Vec2 mouseRelPos (IMinstance.GetMouseX (), IMinstance.GetMouseY ());
@@ -91,7 +101,10 @@ bool Penguins::Is (std::string type) const {
 }
 
 void Penguins::Shoot () {
-    Vec2 bulletPos = Vec2::FromPolar (P_BULLET_OFFSET, cannonAngle) - Vec2 (17,5); // Nao sei pq a sprite esta levemente desalinhada, esse -(17,5) eh para corrigir. Obtido no olhometro
-    Bullet *b = new Bullet (box.GetCentro ()+bulletPos, cannonAngle, BULLET_SPEED*1.2, BULLET_REACH*2, "./resources/img/penguinbullet.png", false, BULLET_DAMAGE, 4, 0.25);
-    Game::GetInstance ().GetState ().AddObject (b);
+    if (shootCooldown.Get () >= P_SHOOT_COOLDOWN) {
+        Vec2 bulletPos = Vec2::FromPolar (P_BULLET_OFFSET, cannonAngle) - Vec2 (17,5); // Nao sei pq a sprite esta levemente desalinhada, esse -(17,5) eh para corrigir. Obtido no olhometro
+        Bullet *b = new Bullet (box.GetCentro ()+bulletPos, cannonAngle, BULLET_SPEED*1.2, BULLET_REACH*2, "./resources/img/penguinbullet.png", false, BULLET_DAMAGE, 4, 0.25);
+        Game::GetInstance ().GetState ().AddObject (b);
+        shootCooldown.Restart ();
+    }
 }

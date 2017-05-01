@@ -4,19 +4,20 @@
 class Penguins;
 
 #define PLAYER_HP 500
-#define PLAYER_ACCELERATION 250 // Pixels/s^2
+#define PLAYER_ACCELERATION 350 // Pixels/s^2
 #define P_BULLET_OFFSET 65 // Pixels
-#define P_SHOOT_COOLDOWN 1 // s
-#define P_PRECISION_MOV_THRES 45 // Pixels/s
-#define PLAYER_MAX_SPEED 600 // Pixels/s
-#define PLAYER_MIN_SPEED 5 // Pixels/s
+#define P_SHOOT_COOLDOWN 0.8 // s
+#define P_PRECISION_MOV_THRES 120 // Pixels/s
+#define PLAYER_MAX_SPEED 500 // Pixels/s
+#define PLAYER_MIN_SPEED 15 // Pixels/s
+#define PLAYER_FRICTION 150 // Pixels/s^2
 
 #include "GameObject.hpp"
 #include "Sprite.hpp"
 #include "Vec2.hpp"
 #include "Timer.hpp"
 
-#define PLAYER_ROT_SPEED 2*M_PI*0.3 // Rad/s
+#define PLAYER_ROT_SPEED 2*M_PI*0.45 // Rad/s
 
 class Penguins : public GameObject {
   public:
