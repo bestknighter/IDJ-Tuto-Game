@@ -1,5 +1,5 @@
-#ifndef _SPRITE_HPP_
-#define _SPRITE_HPP_
+#ifndef SPRITE_HPP
+#define SPRITE_HPP
 
 class Sprite;
 
@@ -23,20 +23,26 @@ class Sprite;
 
 class Sprite {
   public:
-    Sprite ();
-    Sprite (std::string file, unsigned int frameCount = 1, float frameTime = 1);
-    ~Sprite ();
-    void Open (std::string file); // Carrega um imagem para esse sprite
-    void SetClip (int x, int y, int w, int h); // Seta a regiao de interesse (ROI - Region of Interest) da imagem
-    void Render (int x, int y, float angle = 0); // Renderiza a ROI na posicao fornecida
-    void Update (float dt);
-    void SetFrame (unsigned int frame); // Seta manualmente o frame a ser mostrado
-    void SetFrameCount (unsigned int frameCount);
-    void SetFrameTime (float frameTime);
-    int GetWidth ();
-    int GetHeight ();
-    bool IsOpen ();
-    void SetScale (Vec2 const& newScale);
+    Sprite();
+    Sprite( std::string file, unsigned int frameCount = 1, float frameTime = 1 );
+    ~Sprite();
+
+    // Carrega um imagem para esse sprite
+    void Open( std::string file );
+    // Seta a regiao de interesse (ROI - Region of Interest) da imagem
+    void SetClip( int x, int y, int w, int h );
+    // Renderiza a ROI na posicao fornecida
+    void Render( int x, int y, float angle = 0 );
+    void Update( float dt );
+    // Seta manualmente o frame a ser mostrado
+    void SetFrame( unsigned int frame );
+    void SetFrameCount( unsigned int frameCount );
+    void SetFrameTime( float frameTime );
+    int GetWidth();
+    int GetHeight();
+    bool IsOpen();
+    void SetScale( Vec2 const& newScale );
+    
   private:
     SDL_Texture* texture = nullptr; // A imagem do objeto
     int width = 0;
@@ -49,4 +55,4 @@ class Sprite {
     float frameTime;
 };
 
-#endif // _SPRITE_HPP_
+#endif // SPRITE_HPP

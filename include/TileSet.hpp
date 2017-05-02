@@ -1,5 +1,5 @@
-#ifndef _TILESET_HPP_
-#define _TILESET_HPP_
+#ifndef TILESET_HPP
+#define TILESET_HPP
 
 class TileSet;
 
@@ -9,10 +9,12 @@ class TileSet;
 
 class TileSet {
   public:
-    TileSet (unsigned int tileWidth, unsigned int tileHeight, std::string file);
-    void Render (unsigned int index, float x, float y);
-    unsigned int GetTileWidth ();
-    unsigned int GetTileHeight ();
+    TileSet( unsigned int tileWidth, unsigned int tileHeight, std::string file );
+
+    void Render( unsigned int index, float x, float y );
+    unsigned int GetTileWidth();
+    unsigned int GetTileHeight();
+    
   private:
     Sprite tileSet;
     unsigned int rows;
@@ -21,4 +23,4 @@ class TileSet {
     unsigned int tileHeight;
 };
 
-#endif // _TILESET_HPP_
+#endif // TILESET_HPP

@@ -1,94 +1,93 @@
 #include "InputManager.hpp"
 
-void InputManager::Update () {
+void InputManager::Update() {
     SDL_Event event;
-    SDL_GetMouseState (&mouseX, &mouseY);
+    SDL_GetMouseState( &mouseX, &mouseY );
     quitRequested = false;
-    ++updateCounter;
-    while (SDL_PollEvent (&event)) { // Executa o loop enquanto tiver evento para lidar
-        switch (event.type) { // Muda o comportamento de acordo com o tipo do evento
-            case SDL_KEYDOWN:
-                if (event.key.repeat) continue; // Nao precisa registrar repeticao de teclas (quando a tecla eh apertada e segurada)
+    updateCounter++;
+    while ( SDL_PollEvent( &event ) ) { // Executa o loop enquanto tiver evento para lidar
+        switch ( event.type ) { // Muda o comportamento de acordo com o tipo do evento
+            case SDL_KEYDOWN: {
+                // Nao precisa registrar repeticao de teclas (quando a tecla eh apertada e segurada)
+                if ( event.key.repeat ) continue;
                 keyState[event.key.keysym.sym] = true;
                 keyUpdate[event.key.keysym.sym] = updateCounter;
                 break;
-
-            case SDL_KEYUP:
+            }
+            case SDL_KEYUP: {
                 keyState[event.key.keysym.sym] = false;
                 keyUpdate[event.key.keysym.sym] = updateCounter;
                 break;
-            
-            case SDL_MOUSEBUTTONDOWN:
+            }
+            case SDL_MOUSEBUTTONDOWN: {
                 mouseState[event.button.button] = true;
                 mouseUpdate[event.button.button] = updateCounter;
                 break;
-            
-            case SDL_MOUSEBUTTONUP:
+            }
+            case SDL_MOUSEBUTTONUP: {
                 mouseState[event.button.button] = false;
                 mouseUpdate[event.button.button] = updateCounter;
                 break;
-            
-            case SDL_QUIT:
+            }
+            case SDL_QUIT: {
                 quitRequested = true;
                 break;
+            }
+            default: {
+                break;
+            }
         }
     }
 }
 
-bool InputManager::KeyPress (int key) {
-    return keyState[key] && keyUpdate[key] == updateCounter;
+bool InputManager::KeyPress( int key ) {
+    return keyState[key] && (keyUpdate[key] == updateCounter);
 }
 
-bool InputManager::KeyRelease (int key) {
-    return !keyState[key] && keyUpdate[key] == updateCounter;
+bool InputManager::KeyRelease( int key ) {
+    return !keyState[key] && (keyUpdate[key] == updateCounter);
 }
 
-bool InputManager::IsKeyDown (int key) {
+bool InputManager::IsKeyDown( int key ) {
     return keyState[key];
 }
 
-bool InputManager::MousePress (int button) {
-    return mouseState[button] && mouseUpdate[button] == updateCounter;
+bool InputManager::MousePress( int button ) {
+    return mouseState[button] && (mouseUpdate[button] == updateCounter);
 }
 
-bool InputManager::MouseRelease (int button) {
-    return !mouseState[button] && mouseUpdate[button] == updateCounter;
+bool InputManager::MouseRelease( int button ) {
+    return !mouseState[button] && (mouseUpdate[button] == updateCounter);
 }
 
-bool InputManager::IsMouseDown (int button) {
+bool InputManager::IsMouseDown( int button ) {
     return mouseState[button];
 }
 
-int InputManager::GetMouseX () {
+int InputManager::GetMouseX() {
     return mouseX;
 }
 
-int InputManager::GetMouseY () {
+int InputManager::GetMouseY() {
     return mouseY;
 }
 
-bool InputManager::QuitRequested () {
+bool InputManager::QuitRequested() {
     return quitRequested;
 }
 
-InputManager& InputManager::GetInstance () {
+InputManager& InputManager::GetInstance() {
     static InputManager im;
     return im;
 }
 
-InputManager::InputManager () {
+InputManager::InputManager() {
     updateCounter = 0;
     quitRequested = false;
 }
 
-InputManager::InputManager (const InputManager& im) {
+InputManager::InputManager( const InputManager& im ) {}
 
-}
+InputManager& InputManager::operator=( const InputManager& im ) {}
 
-InputManager& InputManager::operator= (const InputManager& im) {
-    
-}
-
-InputManager::~InputManager () {
-
-}
+InputManager::~InputManager() {}

@@ -1,5 +1,5 @@
-#ifndef _ANIMATION_HPP_
-#define _ANIMATION_HPP_
+#ifndef ANIMATION_HPP
+#define ANIMATION_HPP
 
 class Animation;
 
@@ -12,12 +12,15 @@ class Animation;
 
 class Animation : public GameObject {
   public:
-    Animation (Vec2 pos, float rotation, std::string sprite, unsigned int frameCount, float frameTime, bool ends);
-    void Update (float dt);
-    void Render (int cameraX, int cameraY);
-    bool IsDead ();
-    void NotifyCollision (GameObject const&  other);
-    bool Is (std::string type) const;
+    Animation( Vec2 pos, float rotation, std::string sprite,
+               unsigned int frameCount, float frameTime, bool ends );
+    
+    void Update( float dt );
+    void Render( int cameraX, int cameraY );
+    bool IsDead();
+    void NotifyCollision( GameObject const& other );
+    bool Is( std::string type ) const;
+    
   private:
     Timer endTimer;
     float timeLimit;
@@ -25,4 +28,4 @@ class Animation : public GameObject {
     Sprite sp;
 };
 
-#endif // _ANIMATION_HPP_
+#endif // ANIMATION_HPP

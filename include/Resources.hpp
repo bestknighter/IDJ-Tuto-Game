@@ -1,5 +1,5 @@
-#ifndef _RESOURCES_HPP_
-#define _RESOURCES_HPP_
+#ifndef RESOURCES_HPP
+#define RESOURCES_HPP
 
 class Resources;
 
@@ -21,10 +21,12 @@ class Resources;
 
 class Resources {
   public:
-    static SDL_Texture* GetImage (std::string file);
-    static void ClearImages ();
+    static SDL_Texture* GetImage( std::string file );
+    static void ClearImages();
+    
   private:
-    static std::unordered_map<std::string, SDL_Texture*> imageTable; // Tabela com as imagens de acordo com seus caminhos
+    // Tabela com as imagens de acordo com seus caminhos
+    static std::unordered_map<std::string, SDL_Texture*> imageTable;
 };
 
-#endif // _RESOURCES_HPP_
+#endif // RESOURCES_HPP

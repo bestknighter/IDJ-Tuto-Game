@@ -1,5 +1,5 @@
-#ifndef _GAME_HPP_
-#define _GAME_HPP_
+#ifndef GAME_HPP
+#define GAME_HPP
 
 class Game;
 
@@ -26,15 +26,17 @@ class Game;
 
 class Game {
   public:
-    Game (std::string title, Vec2 const& size);
-    ~Game ();
-    void Run (); // Game Loop
-    SDL_Renderer* GetRenderer ();
-    State& GetState ();
-    static Game& GetInstance ();
-    float GetDeltaTime ();
-    const Vec2 GetScreenSize (); // Retorna o tamanho da tela
-    void SetScreenSize (Vec2 const& newSize); // Modifica o tamanho da tela
+    Game( std::string title, Vec2 const& size );
+    ~Game();
+
+    void Run(); // Game Loop
+    SDL_Renderer* GetRenderer();
+    State& GetState();
+    static Game& GetInstance();
+    float GetDeltaTime();
+    const Vec2 GetScreenSize(); // Retorna o tamanho da tela
+    void SetScreenSize( Vec2 const& newSize ); // Modifica o tamanho da tela
+
   private:
     static Game* instance; // Instancia do Game (por ser um singleton)
     SDL_Window* window = nullptr; // A janela a ser usada para exibicao
@@ -43,7 +45,8 @@ class Game {
     int frameStart; // Armazena o tick desde a inicializacao da biblioteca SDL ate o inicio do frame
     const int frameRate = FPS_ALVO; // Limite maximo de fps
     float dt; // Armazena quanto tempo se passou desde o ultimo frame
-    void CalculateDeltaTime (); // Calcula quanto tempo se passou desde o ultimo frame
+    
+    void CalculateDeltaTime(); // Calcula quanto tempo se passou desde o ultimo frame
 };
 
-#endif // _GAME_HPP_
+#endif // GAME_HPP

@@ -1,26 +1,28 @@
 #include "TileSet.hpp"
 
-TileSet::TileSet (unsigned int tileWidth, unsigned int tileHeight, std::string file) : tileSet (file.c_str ()) {
+TileSet::TileSet( unsigned int tileWidth, unsigned int tileHeight, std::string file)
+                 : tileSet ( file.c_str () ) {
     this->tileWidth = tileWidth;
     this->tileHeight = tileHeight;
-    // Se a imagem nao for aberta com sucesso, columns e rows sera 0, impedindo de ocorrer erro ao chamar Render
-    columns = tileSet.IsOpen () * (tileSet.GetWidth () / tileWidth);
-    rows = tileSet.IsOpen () * (tileSet.GetHeight () / tileHeight);
+    // Se a imagem nao for aberta com sucesso, columns e rows sera 0,
+    // impedindo de ocorrer erro ao chamar Render
+    columns = tileSet.IsOpen() * (tileSet.GetWidth() / tileWidth);
+    rows = tileSet.IsOpen() * (tileSet.GetHeight() / tileHeight);
 }
 
-void TileSet::Render (unsigned int index, float x, float y) {
-    if (index < columns*rows) {
+void TileSet::Render( unsigned int index, float x, float y ) {
+    if ( index < columns*rows ) {
         int tileX = (index % columns) * tileWidth;
         int tileY = (index / columns) * tileHeight;
-        tileSet.SetClip (tileX, tileY, tileWidth, tileHeight);
-        tileSet.Render ((int)x, (int)y);
+        tileSet.SetClip( tileX, tileY, tileWidth, tileHeight );
+        tileSet.Render( (int)x, (int)y );
     }
 }
 
-unsigned int TileSet::GetTileWidth () {
+unsigned int TileSet::GetTileWidth() {
     return tileWidth;
 }
 
-unsigned int TileSet::GetTileHeight () {
+unsigned int TileSet::GetTileHeight() {
     return tileHeight;
 }

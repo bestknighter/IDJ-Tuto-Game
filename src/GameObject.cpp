@@ -1,9 +1,7 @@
 #include "GameObject.hpp"
 
-GameObject::GameObject () {
+GameObject::GameObject() {
     rotation = 0;
 }
 
-GameObject::~GameObject () {
-    
-}
+GameObject::~GameObject() {}

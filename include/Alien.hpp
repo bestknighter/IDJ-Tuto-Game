@@ -1,5 +1,5 @@
-#ifndef _ALIEN_HPP_
-#define _ALIEN_HPP_
+#ifndef ALIEN_HPP
+#define ALIEN_HPP
 
 class Alien;
 
@@ -15,23 +15,26 @@ class Alien;
 #include "Timer.hpp"
 #include "Vec2.hpp"
 
-#define ALIEN_ROT_SPEED 2*M_PI*0.033 // Rad/s
+#define ALIEN_ROT_SPEED 2*M_PI*0.033 // rad/s
 #define ALIEN_MOVE_COOLDOWN 1 // s
 #define ALIEN_SHOOT_COOLDOWN 0.33 //s
 
 class Alien : public GameObject {
   public:
-    Alien (Vec2 pos, int nMinions);
-    ~Alien ();
-    void Update (float dt);
-    void Render (int cameraX, int cameraY);
-    bool IsDead ();
-    void NotifyCollision (GameObject const& other);
-    bool Is (std::string type) const;
-    void Shoot ();
+    Alien( Vec2 pos, int nMinions );
+    ~Alien();
+    
     static int alienCount;
+    
+    void Update( float dt );
+    void Render( int cameraX, int cameraY );
+    bool IsDead();
+    void NotifyCollision( GameObject const& other );
+    bool Is( std::string type ) const;
+    void Shoot();
+
   private:
-    enum AlienState {MOVING, RESTING};
+    enum AlienState { MOVING, RESTING };
     AlienState state;
     Timer restTimer;
     Timer shootTimer;
@@ -39,9 +42,9 @@ class Alien : public GameObject {
     Sprite sp; // Imagem do Alien
     Vec2 speed; // Velocidade de movimento
     int hp; // Quantidade de vida
-    
     std::vector<Minion> minionArray; // Vetor de minions
-    Minion& GetClosestMinion (Vec2 const& pos); // Retorna minion mais proximo do ponto pos
+    
+    Minion& GetClosestMinion( Vec2 const& pos ); // Retorna minion mais proximo do ponto pos
 };
 
-#endif // _ALIEN_HPP_
+#endif // ALIEN_HPP

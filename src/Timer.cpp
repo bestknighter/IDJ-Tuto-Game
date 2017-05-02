@@ -1,17 +1,17 @@
 #include "Timer.hpp"
 
-Timer::Timer () {
+Timer::Timer() {
     time = 0;
 }
 
-void Timer::Update (float dt) {
+void Timer::Update( float dt ) {
     time += dt;
 }
 
-void Timer::Restart () {
+void Timer::Restart() {
     time = 0;
 }
 
-float Timer::Get () {
+float Timer::Get() {
     return time;
 }

@@ -1,9 +1,9 @@
-#ifndef _INPUTMANAGER_HPP_
-#define _INPUTMANAGER_HPP_
+#ifndef INPUTMANAGER_HPP
+#define INPUTMANAGER_HPP
 
 class InputManager;
 
-#define IMinstance InputManager::GetInstance ()
+#define IMinstance InputManager::GetInstance()
 
 // Defines de teclado
 #define LEFT_ARROW_KEY SDLK_LEFT
@@ -37,35 +37,38 @@ class InputManager;
 
 class InputManager {
   public:
-    void Update (); // Atualiza estado do registros de estados
-    // Teclado
-    bool KeyPress (int key);
-    bool KeyRelease (int key);
-    bool IsKeyDown (int key);
-    // Mouse
-    bool MousePress (int button);
-    bool MouseRelease (int button); 
-    bool IsMouseDown (int button);
+    static InputManager& GetInstance();
 
-    int GetMouseX ();
-    int GetMouseY ();
+    void Update(); // Atualiza estado do registros de estados
+    // Teclado
+    bool KeyPress( int key );
+    bool KeyRelease( int key );
+    bool IsKeyDown( int key );
+    // Mouse
+    bool MousePress( int button );
+    bool MouseRelease( int button ); 
+    bool IsMouseDown( int button );
+
+    int GetMouseX();
+    int GetMouseY();
 
     // TRUE se houve clique para fechar a janela, ou ALT+F4 e similares, FALSE caso contrario
-    bool QuitRequested ();
+    bool QuitRequested();
 
-    static InputManager& GetInstance ();
   private:
     // Por ser singleton de Meyer, precisa esconder os seguintes
-    InputManager (); // Constructor
-    InputManager (const InputManager& im); // Copy Constructor
-    InputManager& operator= (const InputManager& im); // Assignment Constructor
-    ~InputManager (); // Destructor
+    InputManager(); // Constructor
+    InputManager( const InputManager& im ); // Copy Constructor
+    InputManager& operator=( const InputManager& im ); // Assignment Constructor
+    ~InputManager(); // Destructor
     
     bool mouseState[6]; // Estado {CLICADO, NAO CLICADO} de cada botao do mouse
     int mouseUpdate[6]; // Quando houve a ultima atualizacao de estado de cada botao do mouse
 
-    std::unordered_map<int, bool> keyState; // Estado {PRESSIONADO, NAO PRESSIONADO} de cada tecla do teclado
-    std::unordered_map<int, int> keyUpdate; // Quando houve a ultima atualizacao de estado de cada tecla do teclado
+    // Estado {PRESSIONADO, NAO PRESSIONADO} de cada tecla do teclado
+    std::unordered_map<int, bool> keyState;
+    // Quando houve a ultima atualizacao de estado de cada tecla do teclado
+    std::unordered_map<int, int> keyUpdate;
 
     bool quitRequested;
 
@@ -76,4 +79,4 @@ class InputManager {
     int mouseY;
 };
 
-#endif // _INPUTMANAGER_HPP_
+#endif // NPUTMANAGER_HPP

@@ -1,5 +1,5 @@
-#ifndef _MINION_HPP_
-#define _MINION_HPP_
+#ifndef MINION_HPP
+#define MINION_HPP
 
 class Minion;
 
@@ -13,13 +13,15 @@ class Minion;
 
 class Minion : public GameObject {
   public:
-    Minion (GameObject* minionCenter, float arcOffset);
-    void Update (float dt);
-    void Render (int cameraX, int cameraY);
-    bool IsDead ();
-    void NotifyCollision (GameObject const& other);
-    bool Is (std::string type) const;
-    void Shoot (Vec2 const& target); // Atira um projetil em direcao a target
+    Minion( GameObject* minionCenter, float arcOffset );
+
+    void Update( float dt );
+    void Render( int cameraX, int cameraY );
+    bool IsDead();
+    void NotifyCollision( GameObject const& other );
+    bool Is( std::string type ) const;
+    void Shoot( Vec2 const& target ); // Atira um projetil em direcao a target
+    
   private:
     GameObject* center; // Centro do Alien
     Sprite sp; // Imagem do minion
@@ -27,4 +29,4 @@ class Minion : public GameObject {
     float arcSpeed; // Velocidade da rotacao
 };
 
-#endif // _MINION_HPP_
+#endif // MINION_HPP

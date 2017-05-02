@@ -1,14 +1,16 @@
-#ifndef _TIMER_HPP_
-#define _TIMER_HPP_
+#ifndef TIMER_HPP
+#define TIMER_HPP
 
 class Timer {
   public:
-    Timer ();
-    void Update (float dt);
-    void Restart ();
-    float Get ();
+    Timer();
+
+    void Update( float dt );
+    void Restart();
+    float Get();
+    
   private:
     float time;
 };
 
-#endif // _TIMER_HPP_
+#endif // TIMER_HPP

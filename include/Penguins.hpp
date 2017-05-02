@@ -1,5 +1,5 @@
-#ifndef _PENGUINS_HPP_
-#define _PENGUINS_HPP_
+#ifndef PENGUINS_HPP
+#define PENGUINS_HPP
 
 class Penguins;
 
@@ -21,15 +21,18 @@ class Penguins;
 
 class Penguins : public GameObject {
   public:
-    Penguins (Vec2 const& pos);
-    ~Penguins ();
-    void Update (float dt);
-    void Render (int cameraX, int cameraY);
-    bool IsDead ();
-    void NotifyCollision (GameObject const& other);
-    bool Is (std::string type) const;
-    void Shoot ();
+    Penguins( Vec2 const& pos );
+    ~Penguins();
+
     static Penguins* player;
+    
+    void Update( float dt );
+    void Render( int cameraX, int cameraY );
+    bool IsDead();
+    void NotifyCollision( GameObject const& other );
+    bool Is( std::string type ) const;
+    void Shoot();
+    
   private:
     Sprite bodySp;
     Sprite cannonSp;
@@ -40,4 +43,4 @@ class Penguins : public GameObject {
     Timer shootCooldown;
 };
 
-#endif // _PENGUINS_HPP_
+#endif // PENGUINS_HPP
