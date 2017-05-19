@@ -3,6 +3,7 @@
 
 class Resources;
 
+#include <memory>
 #include <string>
 #include <unordered_map>
 
@@ -19,14 +20,16 @@ class Resources;
 
 #include "Game.hpp"
 
+#define SDL_Texture_shptr std::shared_ptr<SDL_Texture>
+
 class Resources {
   public:
-    static SDL_Texture* GetImage( std::string file );
+    static SDL_Texture_shptr GetImage( std::string file );
     static void ClearImages();
     
   private:
     // Tabela com as imagens de acordo com seus caminhos
-    static std::unordered_map<std::string, SDL_Texture*> imageTable;
+    static std::unordered_map<std::string, SDL_Texture_shptr> imageTable;
 };
 
 #endif // RESOURCES_HPP

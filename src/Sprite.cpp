@@ -31,7 +31,7 @@ Sprite::~Sprite() {}
 
 void Sprite::Open( std::string file ) {
     texture = Resources::GetImage( file );
-    SDL_QueryTexture( texture, nullptr, nullptr, &width, &height );
+    SDL_QueryTexture( texture.get(), nullptr, nullptr, &width, &height );
     SetClip( 0, 0, width / frameCount, height );
 }
 
@@ -69,7 +69,7 @@ void Sprite::Render( int x, int y, float angle ) {
     dst.y = y;
     dst.w = clipRect.w * scale.x;
     dst.h = clipRect.h * scale.y;
-    if ( SDL_RenderCopyEx( Game::GetInstance().GetRenderer(), texture, &clipRect, &dst,
+    if ( SDL_RenderCopyEx( Game::GetInstance().GetRenderer(), texture.get(), &clipRect, &dst,
                            360 * angle / (2 * M_PI), nullptr, SDL_FLIP_NONE) != 0 ) {
         fprintf( stderr, "[ERRO] Nao foi possivel renderizar a sprite (%s:%d): %s\n",
                  __FILE__, __LINE__, SDL_GetError() );

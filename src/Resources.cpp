@@ -1,8 +1,10 @@
 #include "Resources.hpp"
 
-std::unordered_map<std::string, SDL_Texture*> Resources::imageTable {};
+#include <iterator>
 
-SDL_Texture* Resources::GetImage( std::string file ) {
+std::unordered_map<std::string, std::shared_ptr<SDL_Texture>> Resources::imageTable {};
+
+SDL_Texture_shptr Resources::GetImage( std::string file ) {
     auto it = imageTable.find( file );
     // Se nao achar a imagem, carregue-a e retorne-a
     if ( it == imageTable.end() ) {
@@ -12,9 +14,13 @@ SDL_Texture* Resources::GetImage( std::string file ) {
                      "[ERRO] Nao foi possivel carregar a imagem no caminho %s (Resources.cpp:Open()): %s\n",
                      file.c_str(),
                      SDL_GetError() );
+            return nullptr;
         }
-        imageTable.emplace( file, texture );
-        return texture;
+        SDL_Texture_shptr tex_shptr( texture, [] ( SDL_Texture* texture ) {
+                                                    SDL_DestroyTexture( texture );
+                                                } );
+        imageTable.emplace( file, tex_shptr );
+        return tex_shptr;
     } else { // Se achar, so a retorne
         return it->second;
     }
@@ -22,8 +28,12 @@ SDL_Texture* Resources::GetImage( std::string file ) {
 
 void Resources::ClearImages() {
     // Destroi todas as iamgens antes de limpar o vetor
-    for ( auto it = imageTable.begin(); it != imageTable.end(); ++it ) {
-        SDL_DestroyTexture( it->second );
+    for ( int i = imageTable.size() - 1; i >= 0; --i ) {
+        auto it = imageTable.begin();
+        std::advance( it, i );
+        if ( it->second.unique() ) {
+            imageTable.erase( it );
+        }
     }
     imageTable.clear();
 }

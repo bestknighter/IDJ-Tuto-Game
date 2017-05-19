@@ -3,6 +3,7 @@
 
 class Sprite;
 
+#include <memory>
 #include <string>
 
 #ifdef _WIN32
@@ -44,9 +45,9 @@ class Sprite {
     void SetScale( Vec2 const& newScale );
     
   private:
-    SDL_Texture* texture = nullptr; // A imagem do objeto
-    int width = 0;
-    int height = 0;
+    std::shared_ptr<SDL_Texture> texture; // A imagem do objeto
+    int width;
+    int height;
     SDL_Rect clipRect; // ROI da imagem
     Vec2 scale;
     unsigned int frameCount;

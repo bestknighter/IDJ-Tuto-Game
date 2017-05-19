@@ -64,6 +64,7 @@ Game::~Game() {
     while ( !stateStack.empty() ) {
         stateStack.pop();
     }
+    Resources::ClearImages();
     SDL_DestroyRenderer( renderer );
     SDL_DestroyWindow( window );
     IMG_Quit();
@@ -106,6 +107,7 @@ void Game::Run() {
                 state = stateStack.top().get();
                 state->Resume();
             }
+            Resources::ClearImages();
         }
         if ( storedState != nullptr ) {
             state->Pause();
@@ -119,7 +121,6 @@ void Game::Run() {
         // Calcula quanto tempo livre esse frame ainda possui
         delay = 1000/frameRate + frameStart - SDL_GetTicks();
     }
-    Resources::ClearImages();
 }
 
 SDL_Renderer* Game::GetRenderer() {
