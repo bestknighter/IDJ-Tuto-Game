@@ -28,6 +28,7 @@ Alien::Alien( Vec2 pos, int nMinions ) : sp ( "./resources/img/alien.png" ) {
 }
 
 Alien::~Alien() {
+    minionArray.clear();
     alienCount--;
 }
 

@@ -26,6 +26,8 @@ StageState::StageState() : bg ( "./resources/img/ocean.jpg" )
 }
 
 StageState::~StageState() {
+    delete tileSet;
+    delete tileMap;
     ms.Stop();
 }
 
