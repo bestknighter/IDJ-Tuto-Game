@@ -18,6 +18,7 @@ class StageState;
 #endif
 
 #include "GameObject.hpp"
+#include "Music.hpp"
 #include "Sprite.hpp"
 #include "State.hpp"
 #include "TileMap.hpp"
@@ -37,6 +38,7 @@ class StageState : public State {
     void Resume();
   private:
     Sprite bg; // Plano de fundo
+    Music ms;
     TileSet* tileSet; // Imagem com os tiles a ser usado no mapa
     TileMap* tileMap; // O mapa com os indices de cada tile a ser usado
 };

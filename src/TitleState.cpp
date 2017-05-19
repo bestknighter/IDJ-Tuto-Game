@@ -4,7 +4,7 @@
 #include "InputManager.hpp"
 #include "StageState.hpp"
 
-TitleState::TitleState() : bg( "./Resources/img/title.jpg" ) {}
+TitleState::TitleState() : bg( "./resources/img/title.jpg" ) {}
 
 void TitleState::Update( float dt ) {
     quitRequested = IMinstance.QuitRequested();

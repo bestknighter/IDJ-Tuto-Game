@@ -8,19 +8,26 @@
 #include "InputManager.hpp"
 #include "Penguins.hpp"
 #include "Resources.hpp"
+#include "TitleState.hpp"
 #include "Vec2.hpp"
 
-StageState::StageState() : bg ( "./resources/img/ocean.jpg" ) {
+StageState::StageState() : bg ( "./resources/img/ocean.jpg" )
+                         , ms ( "./resources/audio/stageState.ogg" ) {
     tileSet = new TileSet( 64, 64, "./resources/img/tileset.png" );
     tileMap = new TileMap( "./resources/map/tileMap.txt", tileSet );
-    quitRequested = false;
+    
     Penguins *p = new Penguins( Vec2( 704, 640 ) );
     objectArray.emplace_back( p );
     Camera::Follow( p );
-    objectArray.emplace_back( new Alien( Vec2( 512, 300), 3) );
+    objectArray.emplace_back( new Alien( Vec2( 512, 300 ), 3 ) );
+
+    quitRequested = false;
+    ms.Play( -1 );
 }
 
-StageState::~StageState() {}
+StageState::~StageState() {
+    ms.Stop();
+}
 
 void StageState::LoadAssets() {
     Resources::GetImage( "./resources/img/minionbullet2.png" );
@@ -33,7 +40,7 @@ void StageState::LoadAssets() {
 void StageState::Update( float dt ) {
     // Sai dessa fase com ESC ou com solicitacoes do OS
     quitRequested = IMinstance.QuitRequested();
-    popRequested = IMinstance.KeyPress(ESCAPE_KEY);
+    popRequested = IMinstance.KeyPress( ESCAPE_KEY );
 
     Camera::Update( dt );
     UpdateArray( dt );
@@ -63,6 +70,10 @@ void StageState::Render() {
     tileMap->Render( Camera::pos.x, Camera::pos.y, 1 ); // Por ultimo renderiza o resto do mapa
 }
 
-void StageState::Pause() {}
+void StageState::Pause() {
+    ms.Stop();
+}
 
-void StageState::Resume() {}
+void StageState::Resume() {
+    ms.Play( -1 );
+}

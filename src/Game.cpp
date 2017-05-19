@@ -35,6 +35,25 @@ Game::Game( std::string title, Vec2 const& size ) {
                  __FILE__, __LINE__ );
     }
 
+    // Inicializando a SDL_mixer
+    int mixer_inited = Mix_Init( MIX_INIT_FLAC | MIX_INIT_MP3 | MIX_INIT_OGG );
+    if ( !(mixer_inited & MIX_INIT_FLAC) ) {
+        fprintf( stderr, "[AVISO] SDL_mixer nao conseguiu inicializar o decoder de FLAC. (%s:%d)\n",
+                  __FILE__, __LINE__ );
+    }
+    if ( !(mixer_inited & MIX_INIT_MP3) ) {
+        fprintf( stderr, "[AVISO] SDL_mixer nao conseguiu inicializar o decoder de MP3. (%s:%d)\n",
+                  __FILE__, __LINE__ );
+    }
+    if ( !(mixer_inited & MIX_INIT_OGG) ) {
+        fprintf( stderr, "[AVISO] SDL_mixer nao conseguiu inicializar o decoder de OGG. (%s:%d)\n",
+                  __FILE__, __LINE__ );
+    }
+    if ( Mix_OpenAudio( MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024 ) ) {
+        fprintf( stderr, "[ERRO] SDL_mixer nao conseguiu abrir o mixer. (%s:%d)\n",
+                  __FILE__, __LINE__ );
+    }
+
     // Criando a janela
     window = SDL_CreateWindow( title.c_str(), SDL_WINDOWPOS_CENTERED,
                                SDL_WINDOWPOS_CENTERED, size.x, size.y, 0 );
@@ -62,11 +81,15 @@ Game::~Game() {
         delete storedState;
     }
     while ( !stateStack.empty() ) {
+        State* state = stateStack.top().get();
         stateStack.pop();
+        delete state;
     }
     Resources::ClearImages();
     SDL_DestroyRenderer( renderer );
     SDL_DestroyWindow( window );
+    Mix_CloseAudio();
+    Mix_Quit();
     IMG_Quit();
     SDL_Quit();
 }
@@ -103,6 +126,7 @@ void Game::Run() {
         // Pilha
         if ( state->PopRequested() ) {
             stateStack.pop();
+            delete state;
             if ( !stateStack.empty() ) {
                 state = stateStack.top().get();
                 state->Resume();
