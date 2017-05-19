@@ -24,7 +24,7 @@
 #endif
 
 #include "Game.hpp"
-#include "StageState.hpp"
+#include "TitleState.hpp"
 #include "Vec2.hpp"
 
 #define TITULO_JOGO "Gabriel Filipe Botelho Barbosa 12\\0050935"
@@ -37,7 +37,7 @@ int main( int argc, char* argv[] ) {
     printf( DEBUG?"DEBUG\n":"RELEASE\n" );
 
     Game game( TITULO_JOGO, {JOGO_WIDTH, JOGO_HEIGHT} );
-    game.Push( new StageState() );
+    game.Push( new TitleState() );
     game.Run();
     
     return 0;

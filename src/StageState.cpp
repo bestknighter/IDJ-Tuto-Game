@@ -32,7 +32,8 @@ void StageState::LoadAssets() {
 
 void StageState::Update( float dt ) {
     // Sai dessa fase com ESC ou com solicitacoes do OS
-    quitRequested = IMinstance.QuitRequested() || IMinstance.KeyPress(ESCAPE_KEY);
+    quitRequested = IMinstance.QuitRequested();
+    popRequested = IMinstance.KeyPress(ESCAPE_KEY);
 
     Camera::Update( dt );
     UpdateArray( dt );

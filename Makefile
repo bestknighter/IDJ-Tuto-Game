@@ -88,7 +88,7 @@ ifeq ($(OS),Windows_NT)
 	$(eval DIRECTIVES += -mconsole)
 	$(eval LIBS += -mconsole)
 endif
-	$(eval DIRECTIVES += -ggdb -O0)
+	$(eval DIRECTIVES += -ggdb3 -O0)
 	$(eval DEBUG = 1)
 
 profile: set_profile all

@@ -100,7 +100,7 @@ void Game::Run() {
         SDL_RenderPresent( renderer );
 
         // Pilha
-        if ( state->QuitRequested() ) {
+        if ( state->PopRequested() ) {
             stateStack.pop();
             if ( !stateStack.empty() ) {
                 state = stateStack.top().get();
@@ -112,6 +112,7 @@ void Game::Run() {
             stateStack.emplace( storedState );
             storedState = nullptr;
             state = stateStack.top().get();
+            state->LoadAssets();
             state->Resume();
         }
 

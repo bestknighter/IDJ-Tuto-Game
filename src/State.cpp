@@ -11,6 +11,8 @@ State::~State() {
     objectArray.clear();
 }
 
+void State::LoadAssets() {}
+
 void State::AddObject( GameObject* object ) {
     objectArray.emplace_back( object );
 }
