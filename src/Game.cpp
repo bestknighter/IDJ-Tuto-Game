@@ -110,7 +110,7 @@ void Game::Run() {
     // Quando o frame termina, o Delay eh o tempo que faltava para se obter o framerate alvo
     int delay;
     state->Resume();
-    for ( frameStart = SDL_GetTicks(); !( state->QuitRequested() || stateStack.empty() ); SDL_Delay(delay > 0 ? delay : 0) ) {
+    for ( frameStart = SDL_GetTicks(); !( stateStack.empty() || state->QuitRequested() ); SDL_Delay(delay > 0 ? delay : 0) ) {
         CalculateDeltaTime();
 
         // Updates
