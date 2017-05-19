@@ -20,13 +20,7 @@ StageState::StageState() : bg ( "./resources/img/ocean.jpg" ) {
     objectArray.emplace_back( new Alien( Vec2( 512, 300), 3) );
 }
 
-StageState::~StageState() {
-    objectArray.clear();
-}
-
-bool StageState::QuitRequested() {
-    return quitRequested;
-}
+StageState::~StageState() {}
 
 void StageState::LoadAssets() {
     Resources::GetImage( "./resources/img/minionbullet2.png" );
@@ -41,13 +35,7 @@ void StageState::Update( float dt ) {
     quitRequested = IMinstance.QuitRequested() || IMinstance.KeyPress(ESCAPE_KEY);
 
     Camera::Update( dt );
-    // Atualiza todos os objetos e remove os que ja estao mortos
-    for ( int i = objectArray.size() - 1; i >= 0; --i ) {
-        objectArray[i]->Update( dt );
-        if ( objectArray[i]->IsDead() ) {
-            objectArray.erase( objectArray.begin() + i );
-        }
-    }
+    UpdateArray( dt );
 
     // Checa por colisao
     for ( int i = 0; i < objectArray.size()-1; ++i ) {
@@ -70,12 +58,10 @@ void StageState::Update( float dt ) {
 void StageState::Render() {
     bg.Render( 0, 0 );
     tileMap->Render( Camera::pos.x, Camera::pos.y, 0, 0 ); // Renderiza camada base do mapa
-    for ( unsigned int i = 0; i < objectArray.size(); ++i ) { // Depois renderiza pinguins
-        objectArray[i]->Render( Camera::pos.x, Camera::pos.y );
-    }
+    RenderArray();
     tileMap->Render( Camera::pos.x, Camera::pos.y, 1 ); // Por ultimo renderiza o resto do mapa
 }
 
-void StageState::AddObject( GameObject *ptr ) {
-    objectArray.emplace_back( ptr );
-}
+void StageState::Pause() {}
+
+void StageState::Resume() {}

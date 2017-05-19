@@ -84,7 +84,7 @@ bool Penguins::IsDead() {
         // eh para corrigir. Obtido no olhometro
         Animation *anim = new Animation( box.GetCentro() - Vec2( 50, 10 ), rotation,
                                          "./resources/img/penguindeath.png", 5, 0.1, true );
-        Game::GetInstance().GetState().AddObject( anim );
+        Game::GetInstance().GetCurrentState().AddObject( anim );
         return true;
     }
     return false;
@@ -111,7 +111,7 @@ void Penguins::Shoot() {
         Bullet *b = new Bullet( box.GetCentro() + bulletPos, cannonAngle, BULLET_SPEED*1.2,
                                 BULLET_REACH*2, "./resources/img/penguinbullet.png", false,
                                 BULLET_DAMAGE, 4, 0.25 );
-        Game::GetInstance().GetState().AddObject( b );
+        Game::GetInstance().GetCurrentState().AddObject( b );
         shootCooldown.Restart();
     }
 }

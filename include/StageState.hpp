@@ -19,27 +19,26 @@ class StageState;
 
 #include "GameObject.hpp"
 #include "Sprite.hpp"
+#include "State.hpp"
 #include "TileMap.hpp"
 #include "TileSet.hpp"
 
 // Fase com os penguins
-class StageState {
+class StageState : public State {
   public:
     StageState();
     ~StageState();
 
-    bool QuitRequested();
     void LoadAssets();
     void Update( float dt );
     void Render();
-    void AddObject( GameObject *ptr );
 
+    void Pause();
+    void Resume();
   private:
-    bool quitRequested;
     Sprite bg; // Plano de fundo
     TileSet* tileSet; // Imagem com os tiles a ser usado no mapa
     TileMap* tileMap; // O mapa com os indices de cada tile a ser usado
-    std::vector<std::unique_ptr<GameObject>> objectArray; // Objetos dessa fase
 };
 
 #endif // STAGESTATE_HPP

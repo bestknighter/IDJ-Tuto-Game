@@ -53,12 +53,17 @@ Game::Game( std::string title, Vec2 const& size ) {
     // Inicializando variaveis
     dt = 0;
     frameStart = 0;
-    state = new State();
+    storedState = nullptr;
     srand( time( 0 ) );
 }
 
 Game::~Game() {
-    delete state;
+    if ( storedState != nullptr ) {
+        delete storedState;
+    }
+    while ( !stateStack.empty() ) {
+        stateStack.pop();
+    }
     SDL_DestroyRenderer( renderer );
     SDL_DestroyWindow( window );
     IMG_Quit();
@@ -66,13 +71,24 @@ Game::~Game() {
 }
 
 void Game::Run() {
+    State* state;
+    if ( storedState != nullptr ) {
+        stateStack.emplace( storedState );
+        storedState = nullptr;
+        state = stateStack.top().get();
+    } else {
+        fprintf( stderr, "[ERRO] Jogo sem estado inicial\n");
+        return;
+    }
+
     state->LoadAssets();
-    int delay;
 
     // Inicializa o game loop calculando qual e o tempo atual.
     // Permanece nele somente se state nao tiver mandado sair
     // Quando o frame termina, o Delay eh o tempo que faltava para se obter o framerate alvo
-    for ( frameStart = SDL_GetTicks(); !state->QuitRequested(); SDL_Delay(delay > 0 ? delay : 0) ) {
+    int delay;
+    state->Resume();
+    for ( frameStart = SDL_GetTicks(); !( state->QuitRequested() || stateStack.empty() ); SDL_Delay(delay > 0 ? delay : 0) ) {
         CalculateDeltaTime();
 
         // Updates
@@ -82,6 +98,22 @@ void Game::Run() {
         // Renders
         state->Render();
         SDL_RenderPresent( renderer );
+
+        // Pilha
+        if ( state->QuitRequested() ) {
+            stateStack.pop();
+            if ( !stateStack.empty() ) {
+                state = stateStack.top().get();
+                state->Resume();
+            }
+        }
+        if ( storedState != nullptr ) {
+            state->Pause();
+            stateStack.emplace( storedState );
+            storedState = nullptr;
+            state = stateStack.top().get();
+            state->Resume();
+        }
 
         // Calcula quanto tempo livre esse frame ainda possui
         delay = 1000/frameRate + frameStart - SDL_GetTicks();
@@ -93,8 +125,13 @@ SDL_Renderer* Game::GetRenderer() {
     return renderer;
 }
 
-State& Game::GetState() {
-    return *state;
+void Game::Push(State* state) {
+    storedState = state;
+    // stateStack.emplace_back(state);
+}
+
+State& Game::GetCurrentState() {
+    return *stateStack.top();
 }
 
 Game& Game::GetInstance() {
