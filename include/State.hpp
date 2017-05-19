@@ -9,7 +9,7 @@
 class State {
   public:
     State();
-    ~State();
+    virtual ~State();
 
     virtual void LoadAssets();
     virtual void Update( float dt ) = 0;

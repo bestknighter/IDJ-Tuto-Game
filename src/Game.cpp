@@ -81,9 +81,7 @@ Game::~Game() {
         delete storedState;
     }
     while ( !stateStack.empty() ) {
-        State* state = stateStack.top().get();
         stateStack.pop();
-        delete state;
     }
     Resources::ClearImages();
     SDL_DestroyRenderer( renderer );
@@ -126,7 +124,6 @@ void Game::Run() {
         // Pilha
         if ( state->PopRequested() ) {
             stateStack.pop();
-            delete state;
             if ( !stateStack.empty() ) {
                 state = stateStack.top().get();
                 state->Resume();
