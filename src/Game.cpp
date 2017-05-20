@@ -54,6 +54,13 @@ Game::Game( std::string title, Vec2 const& size ) {
                   __FILE__, __LINE__ );
     }
 
+    // Inicializando TTF
+    int ttf_inited = TTF_Init();
+    if ( ttf_inited ) {
+        fprintf( stderr, "[ERRO] SDL_ttf nao consegui ser inicializado. (%s:%d): %s\n",
+                 __FILE__, __LINE__, SDL_GetError() );
+    }
+
     // Criando a janela
     window = SDL_CreateWindow( title.c_str(), SDL_WINDOWPOS_CENTERED,
                                SDL_WINDOWPOS_CENTERED, size.x, size.y, 0 );
@@ -83,7 +90,7 @@ Game::~Game() {
     while ( !stateStack.empty() ) {
         stateStack.pop();
     }
-    Resources::ClearResources();
+    Resources::DestroyResources();
     SDL_DestroyRenderer( renderer );
     SDL_DestroyWindow( window );
     Mix_CloseAudio();

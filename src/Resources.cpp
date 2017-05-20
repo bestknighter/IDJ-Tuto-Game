@@ -5,11 +5,20 @@
 std::unordered_map<std::string, SDL_Texture_shptr> Resources::imageTable {};
 std::unordered_map<std::string, Mix_Music_shptr> Resources::musicTable {};
 std::unordered_map<std::string, Mix_Chunk_shptr> Resources::soundTable {};
+std::unordered_map<std::string, TTF_Font_shptr> Resources::fontTable {};
 
 void Resources::ClearResources() {
     ClearImages();
     ClearMusics();
     ClearSounds();
+    ClearFonts();
+}
+
+void Resources::DestroyResources() {
+    imageTable.clear();
+    musicTable.clear();
+    soundTable.clear();
+    fontTable.clear();
 }
 
 SDL_Texture_shptr Resources::GetImage( std::string file ) {
@@ -43,7 +52,6 @@ void Resources::ClearImages() {
             imageTable.erase( it );
         }
     }
-    imageTable.clear();
 }
 
 Mix_Music_shptr Resources::GetMusic( std::string file ) {
@@ -77,7 +85,6 @@ void Resources::ClearMusics() {
             musicTable.erase( it );
         }
     }
-    musicTable.clear();
 }
 
 Mix_Chunk_shptr Resources::GetSound( std::string file ) {
@@ -111,5 +118,38 @@ void Resources::ClearSounds() {
             soundTable.erase( it );
         }
     }
-    soundTable.clear();
+}
+
+TTF_Font_shptr Resources::GetFont( std::string file, int fontSize ) {
+    std::string key = file + "-" + std::to_string( fontSize );
+    auto it = fontTable.find( key );
+    // Se nao achar a fonte, carregue-a e retorne-a
+    if ( it == fontTable.end() ) {
+        TTF_Font* font = TTF_OpenFont( file.c_str(), fontSize );
+        if ( font == nullptr ) {
+            fprintf( stderr,
+                     "[ERRO] Nao foi possivel carregar a fonte no caminho %s (Resources.cpp:Open()): %s\n",
+                     file.c_str(),
+                     SDL_GetError() );
+            return nullptr;
+        }
+        TTF_Font_shptr font_shptr( font, [] ( TTF_Font* font ) {
+                                                    TTF_CloseFont( font );
+                                                } );
+        fontTable.emplace( key, font_shptr );
+        return font_shptr;
+    } else { // Se achar, so a retorne
+        return it->second;
+    }
+}
+
+void Resources::ClearFonts() {
+    // Destroi todas as fontes antes de limpar o vetor
+    for ( int i = fontTable.size() - 1; i >= 0; --i ) {
+        auto it = fontTable.begin();
+        std::advance( it, i );
+        if ( it->second.unique() ) {
+            fontTable.erase( it );
+        }
+    }
 }

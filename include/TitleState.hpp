@@ -3,6 +3,7 @@
 
 #include "Sprite.hpp"
 #include "State.hpp"
+#include "Text.hpp"
 
 class TitleState : public State {
   public:
@@ -15,6 +16,7 @@ class TitleState : public State {
     void Resume();
   private:
     Sprite bg;
+    Text titleText;
 };
 
 #endif // TITLESTATE_HPP
