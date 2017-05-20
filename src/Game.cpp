@@ -84,6 +84,7 @@ Game::~Game() {
         stateStack.pop();
     }
     Resources::ClearImages();
+    Resources::ClearMusic();
     SDL_DestroyRenderer( renderer );
     SDL_DestroyWindow( window );
     Mix_CloseAudio();
