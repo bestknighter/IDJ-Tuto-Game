@@ -13,6 +13,7 @@ class Penguins;
 #define PLAYER_FRICTION 150 // Pixels/s^2
 
 #include "GameObject.hpp"
+#include "Sound.hpp"
 #include "Sprite.hpp"
 #include "Vec2.hpp"
 #include "Timer.hpp"
@@ -34,6 +35,7 @@ class Penguins : public GameObject {
     void Shoot();
     
   private:
+    Sound snd;
     Sprite bodySp;
     Sprite cannonSp;
     Vec2 speed;

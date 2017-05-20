@@ -83,8 +83,7 @@ Game::~Game() {
     while ( !stateStack.empty() ) {
         stateStack.pop();
     }
-    Resources::ClearImages();
-    Resources::ClearMusic();
+    Resources::ClearResources();
     SDL_DestroyRenderer( renderer );
     SDL_DestroyWindow( window );
     Mix_CloseAudio();
@@ -129,7 +128,7 @@ void Game::Run() {
                 state = stateStack.top().get();
                 state->Resume();
             }
-            Resources::ClearImages();
+            Resources::ClearResources();
         }
         if ( storedState != nullptr ) {
             state->Pause();

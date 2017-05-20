@@ -1,5 +1,5 @@
-#ifndef MUSIC_HPP
-#define MUSIC_HPP
+#ifndef SOUND_HPP
+#define SOUND_HPP
 
 #include <string>
 #include <memory>
@@ -15,17 +15,18 @@
 #   error "Unknown or unsupported compiler"
 #endif
 
-class Music {
+class Sound {
   public:
-    Music();
-    Music( std::string file );
+    Sound();
+    Sound( std::string file );
 
-    void Play( int times );
-    void Stop( int fadeTime = 100);
+    void Play( int times = 0 );
+    void Stop();
     void Open( std::string file );
     bool IsOpen();
   private:
-    std::shared_ptr<Mix_Music> music;
+    std::shared_ptr<Mix_Chunk> chunk;
+    int channel;    
 };
 
-#endif // MUSIC_HPP
+#endif // SOUND_HPP

@@ -4,6 +4,13 @@
 
 std::unordered_map<std::string, SDL_Texture_shptr> Resources::imageTable {};
 std::unordered_map<std::string, Mix_Music_shptr> Resources::musicTable {};
+std::unordered_map<std::string, Mix_Chunk_shptr> Resources::soundTable {};
+
+void Resources::ClearResources() {
+    ClearImages();
+    ClearMusics();
+    ClearSounds();
+}
 
 SDL_Texture_shptr Resources::GetImage( std::string file ) {
     auto it = imageTable.find( file );
@@ -28,7 +35,7 @@ SDL_Texture_shptr Resources::GetImage( std::string file ) {
 }
 
 void Resources::ClearImages() {
-    // Destroi todas as iamgens antes de limpar o vetor
+    // Destroi todas as imagens antes de limpar o vetor
     for ( int i = imageTable.size() - 1; i >= 0; --i ) {
         auto it = imageTable.begin();
         std::advance( it, i );
@@ -61,8 +68,8 @@ Mix_Music_shptr Resources::GetMusic( std::string file ) {
     }
 }
 
-void Resources::ClearMusic() {
-    // Destroi todas as iamgens antes de limpar o vetor
+void Resources::ClearMusics() {
+    // Destroi todas musicas antes de limpar o vetor
     for ( int i = musicTable.size() - 1; i >= 0; --i ) {
         auto it = musicTable.begin();
         std::advance( it, i );
@@ -71,4 +78,38 @@ void Resources::ClearMusic() {
         }
     }
     musicTable.clear();
+}
+
+Mix_Chunk_shptr Resources::GetSound( std::string file ) {
+    auto it = soundTable.find( file );
+    // Se nao achar o som, carregue-a e retorne-a
+    if ( it == soundTable.end() ) {
+        Mix_Chunk* sound = Mix_LoadWAV( file.c_str() );
+        if ( sound == nullptr ) {
+            fprintf( stderr,
+                     "[ERRO] Nao foi possivel carregar o som no caminho %s (Resources.cpp:Open()): %s\n",
+                     file.c_str(),
+                     SDL_GetError() );
+            return nullptr;
+        }
+        Mix_Chunk_shptr snd_shptr( sound, [] ( Mix_Chunk* sound ) {
+                                                    Mix_FreeChunk( sound );
+                                                } );
+        soundTable.emplace( file, snd_shptr );
+        return snd_shptr;
+    } else { // Se achar, so a retorne
+        return it->second;
+    }
+}
+
+void Resources::ClearSounds() {
+    // Destroi todos os sons antes de limpar o vetor
+    for ( int i = soundTable.size() - 1; i >= 0; --i ) {
+        auto it = soundTable.begin();
+        std::advance( it, i );
+        if ( it->second.unique() ) {
+            soundTable.erase( it );
+        }
+    }
+    soundTable.clear();
 }

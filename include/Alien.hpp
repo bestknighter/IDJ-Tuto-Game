@@ -11,6 +11,7 @@ class Alien;
 
 #include "GameObject.hpp"
 #include "Minion.hpp"
+#include "Sound.hpp"
 #include "Sprite.hpp"
 #include "Timer.hpp"
 #include "Vec2.hpp"
@@ -40,6 +41,7 @@ class Alien : public GameObject {
     Timer shootTimer;
     Vec2 destination;
     Sprite sp; // Imagem do Alien
+    Sound snd;
     Vec2 speed; // Velocidade de movimento
     int hp; // Quantidade de vida
     std::vector<Minion> minionArray; // Vetor de minions

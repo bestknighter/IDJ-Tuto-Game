@@ -11,7 +11,8 @@
 
 int Alien::alienCount = 0;
 
-Alien::Alien( Vec2 pos, int nMinions ) : sp ( "./resources/img/alien.png" ) {
+Alien::Alien( Vec2 pos, int nMinions ) : sp( "./resources/img/alien.png" )
+                                       , snd( "./resources/audio/boom.wav" ) {
     Vec2 size = Vec2( sp.GetWidth(), sp.GetHeight() );
     box = Rect( pos - size/2, size );
     speed = Vec2( 0, 0 );
@@ -102,7 +103,7 @@ bool Alien::IsDead() {
             anim = new Animation ( pos, rotation, "./resources/img/miniondeath.png", 4, 0.1, true );
             Game::GetInstance().GetCurrentState().AddObject( anim );
         }
-
+        snd.Play();
         return true;
     }
     return false;

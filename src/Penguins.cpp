@@ -9,14 +9,15 @@
 
 Penguins* Penguins::player = nullptr;
 
-Penguins::Penguins( Vec2 const& pos ) : GameObject () {
+Penguins::Penguins( Vec2 const& pos ) : GameObject()
+                                      , bodySp( "./resources/img/penguin.png" )
+                                      , cannonSp( "./resources/img/cubngun.png" )
+                                      , snd( "./resources/audio/boom.wav" ) {
     if ( player == nullptr ) {
         player = this;
     } // Seria bom lancar erro no else
     hp = PLAYER_HP;
     speed = Vec2( 0, 0 );
-    bodySp = Sprite( "./resources/img/penguin.png" );
-    cannonSp = Sprite( "./resources/img/cubngun.png" );
     Vec2 size = Vec2( bodySp.GetWidth(), bodySp.GetHeight() );
     box = Rect( pos - size/2, size );
     linearSpeed = 0;
@@ -85,6 +86,7 @@ bool Penguins::IsDead() {
         Animation *anim = new Animation( box.GetCentro() - Vec2( 50, 10 ), rotation,
                                          "./resources/img/penguindeath.png", 5, 0.1, true );
         Game::GetInstance().GetCurrentState().AddObject( anim );
+        snd.Play();
         return true;
     }
     return false;

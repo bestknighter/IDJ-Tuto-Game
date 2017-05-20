@@ -37,6 +37,7 @@ void StageState::LoadAssets() {
     Resources::GetImage( "./resources/img/penguindeath.png" );
     Resources::GetImage( "./resources/img/aliendeath.png" );
     Resources::GetImage( "./resources/img/miniondeath.png" );
+    Resources::GetSound( "./resources/audio/boom.wav" );
 }
 
 void StageState::Update( float dt ) {
