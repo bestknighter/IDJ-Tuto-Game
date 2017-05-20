@@ -1,7 +1,7 @@
 #ifndef STAGESTATE_HPP
 #define STAGESTATE_HPP
 
-class StageState;
+#define END_DELAY 1.33
 
 #include <vector>
 #include <memory>
@@ -23,6 +23,8 @@ class StageState;
 #include "State.hpp"
 #include "TileMap.hpp"
 #include "TileSet.hpp"
+#include "Timer.hpp"
+#include "Vec2.hpp"
 
 // Fase com os penguins
 class StageState : public State {
@@ -41,6 +43,10 @@ class StageState : public State {
     Music ms;
     TileSet* tileSet; // Imagem com os tiles a ser usado no mapa
     TileMap* tileMap; // O mapa com os indices de cada tile a ser usado
+
+    Timer endDelay;
+
+    void GameOver( bool playerWon );
 };
 
 #endif // STAGESTATE_HPP

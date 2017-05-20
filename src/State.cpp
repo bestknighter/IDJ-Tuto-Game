@@ -26,7 +26,7 @@ bool State::QuitRequested() {
 }
 
 void State::UpdateArray( float dt ) {
-    for ( int i = objectArray.size() - 1; i >= 0; --i ) {
+    for ( int i = 0; i < objectArray.size(); ++i ) {
         objectArray[i]->Update( dt );
         if ( objectArray[i]->IsDead() ) {
             objectArray.erase( objectArray.begin() + i );

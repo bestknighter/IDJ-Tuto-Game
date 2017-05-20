@@ -1,11 +1,13 @@
 #include "Penguins.hpp"
 
+#include <iostream>
+
 #include "Animation.hpp"
 #include "Bullet.hpp"
 #include "Camera.hpp"
 #include "Game.hpp"
 #include "InputManager.hpp"
-#include <iostream>
+#include "StageState.hpp"
 
 Penguins* Penguins::player = nullptr;
 
@@ -39,7 +41,7 @@ void Penguins::Update( float dt ) {
     }
 
     // Handle Input
-    if ( IMinstance.MousePress( LEFT_MOUSE_BUTTON ) ) {
+    if ( IMinstance.IsMouseDown( LEFT_MOUSE_BUTTON ) ) {
         Shoot();
     }
     if ( IMinstance.IsKeyDown( W_KEY ) ) {
@@ -65,7 +67,15 @@ void Penguins::Update( float dt ) {
     }
 
     speed = Vec2::FromPolar( actualSpeed, rotation );
-    box.SetPosicao( box.GetPosicao() + speed * dt );
+    Vec2 newPos = box.GetCentro() + speed * dt;
+    
+    Vec2 min( 0,0 );
+    Vec2 max( 1408,1280 );
+    newPos = Vec2( newPos.x < min.x ? min.x : newPos.x, newPos.y < min.y ? min.y : newPos.y );
+    newPos = Vec2( newPos.x > max.x ? max.x : newPos.x, newPos.y > max.y ? max.y : newPos.y );
+    newPos = newPos - box.GetTamanho()/2;
+
+    box.SetPosicao( newPos );
 
     Vec2 mouseRelPos ( IMinstance.GetMouseX(), IMinstance.GetMouseY() );
     mouseRelPos = mouseRelPos - box.GetCentro() + Camera::pos;

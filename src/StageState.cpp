@@ -5,6 +5,7 @@
 #include "Alien.hpp"
 #include "Camera.hpp"
 #include "Collision.hpp"
+#include "EndState.hpp"
 #include "InputManager.hpp"
 #include "Penguins.hpp"
 #include "Resources.hpp"
@@ -28,7 +29,6 @@ StageState::StageState() : bg ( "./resources/img/ocean.jpg" )
 StageState::~StageState() {
     delete tileSet;
     delete tileMap;
-    ms.Stop();
 }
 
 void StageState::LoadAssets() {
@@ -48,10 +48,14 @@ void StageState::Update( float dt ) {
     Camera::Update( dt );
     UpdateArray( dt );
 
+    bool animHappening = false;
     // Checa por colisao
     for ( int i = 0; i < objectArray.size()-1; ++i ) {
-        if ( objectArray[i]->Is( "Animation" ) ) continue; 
-        for ( int j = i+1; j < objectArray.size(); j++ ) {
+        if ( objectArray[i]->Is( "Animation" ) ) {
+            animHappening = true;
+            continue;
+        }
+        for ( int j = i+1; j < objectArray.size(); ++j ) {
             if ( objectArray[j]->Is( "Animation" ) ) continue;
             if ( Collision::IsColliding( objectArray[i]->box,
                                          objectArray[j]->box,
@@ -62,6 +66,17 @@ void StageState::Update( float dt ) {
                 objectArray[j]->NotifyCollision( *objectArray[i] );
             }
         }
+    }
+
+    if ( animHappening ) {
+        endDelay.Restart();
+    } else if ( 0 == Alien::alienCount || nullptr == Penguins::player ) {
+        endDelay.Update( dt );
+        ms.Stop(1.5*END_DELAY*1000);
+    }
+
+    if ( END_DELAY < endDelay.Get() ) {
+        GameOver( 0 == Alien::alienCount );
     }
 
 }
@@ -79,4 +94,9 @@ void StageState::Pause() {
 
 void StageState::Resume() {
     ms.Play( -1 );
+}
+
+void StageState::GameOver( bool playerWon ) {
+    popRequested = true;
+    Game::GetInstance().Push( new EndState( {playerWon} ) );
 }
