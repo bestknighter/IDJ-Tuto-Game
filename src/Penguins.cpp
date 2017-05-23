@@ -12,9 +12,9 @@
 Penguins* Penguins::player = nullptr;
 
 Penguins::Penguins( Vec2 const& pos ) : GameObject()
+                                      , snd( "./resources/audio/boom.wav" )
                                       , bodySp( "./resources/img/penguin.png" )
-                                      , cannonSp( "./resources/img/cubngun.png" )
-                                      , snd( "./resources/audio/boom.wav" ) {
+                                      , cannonSp( "./resources/img/cubngun.png" ) {
     if ( player == nullptr ) {
         player = this;
     } // Seria bom lancar erro no else

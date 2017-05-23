@@ -4,7 +4,7 @@
 class Bullet;
 
 #define BULLET_SPEED 250 // Pixels/s
-#define BULLET_REACH 1000 // Pixels
+#define BULLET_REACH 2000 // Pixels
 #define BULLET_DAMAGE 25
 
 #include <string>

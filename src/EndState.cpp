@@ -6,11 +6,11 @@
 #include "Vec2.hpp"
 
 EndState::EndState( StateData stateData )
-          : instruction( "./resources/font/Call me maybe.ttf", 50,
-                        Text::TextStyle::BLENDED,
-                        "ESC para menu, espaco para tentar de novo",
-                        {255,255,255,255}, {0.0,0.0} ),
-            State() {
+          : State(),
+            instruction( "./resources/font/Call me maybe.ttf", 50,
+                         Text::TextStyle::BLENDED,
+                         "ESC para menu, espaco para tentar de novo",
+                         {255,255,255,255}, {0.0,0.0} ) {
     Vec2 textPos( Game::GetInstance().GetScreenSize().x/2, 45 );
     instruction.SetPos( textPos, true, true );
     bg = Sprite( stateData.playerVictory ? "./resources/img/win.jpg" : "./resources/img/lose.jpg" );

@@ -1,5 +1,6 @@
 #include "Alien.hpp"
 
+#include <cstdlib>
 #include <cfloat>
 
 #include "Animation.hpp"
@@ -20,6 +21,7 @@ Alien::Alien( Vec2 pos, int nMinions ) : sp( "./resources/img/alien.png" )
     restTimer = Timer();
     shootTimer = Timer();
     state = AlienState::RESTING;
+    minionArraySize = nMinions;
     
     for ( int i = 0; i < nMinions; ++i ) {
         minionArray.emplace_back( this, i*2*M_PI/nMinions );
@@ -43,8 +45,16 @@ void Alien::Update( float dt ) {
 
     switch ( state ) {
         case AlienState::RESTING: {
-            if ( restTimer.Get() > ALIEN_MOVE_COOLDOWN && nullptr != Penguins::player ) {
-                destination = Penguins::player->box.GetCentro();
+            if ( restTimer.Get() > ALIEN_MOVE_COOLDOWN*minionArraySize/2 && nullptr != Penguins::player ) {
+                float noiseX = 150*2*(rand()/RAND_MAX-0.5);
+                float noiseY = 150*2*(rand()/RAND_MAX-0.5);
+                Vec2 noise( noiseX, noiseY );
+                destination = Penguins::player->box.GetCentro() + noise;
+                
+                Vec2 min( 0,0 );
+                Vec2 max( 1408,1280 );
+                destination = Vec2( destination.x < min.x ? min.x : destination.x, destination.y < min.y ? min.y : destination.y );
+                destination = Vec2( destination.x > max.x ? max.x : destination.x, destination.y > max.y ? max.y : destination.y );
                 // Aqui ele atira assim que for voltar a andar
                 // Shoot();
                 state = AlienState::MOVING;

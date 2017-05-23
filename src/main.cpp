@@ -31,7 +31,7 @@
 #define JOGO_WIDTH 1024
 #define JOGO_HEIGHT 600
 
-int main( int argc, char* argv[] ) {
+int main( int argc __attribute__((unused)), char* argv[] __attribute__((unused)) ) {
 
     printf( "Project Version %d.%d.%d.%d ", PROJECT_VERSION_MAJOR, PROJECT_VERSION_MINOR, PROJECT_VERSION_PATCH, PROJECT_VERSION_TWEAK );
     printf( DEBUG?"DEBUG\n":"RELEASE\n" );

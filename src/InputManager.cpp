@@ -86,8 +86,10 @@ InputManager::InputManager() {
     quitRequested = false;
 }
 
-InputManager::InputManager( const InputManager& im ) {}
+InputManager::InputManager( const InputManager& im __attribute__((unused)) ) {}
 
-InputManager& InputManager::operator=( const InputManager& im ) {}
+InputManager& InputManager::operator=( const InputManager& im __attribute__((unused)) ) {
+    return *this;
+}
 
 InputManager::~InputManager() {}

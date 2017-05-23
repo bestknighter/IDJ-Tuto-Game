@@ -9,11 +9,11 @@ Text::Text( std::string fontFile, int fontSize,
             TextStyle style, std::string text,
             SDL_Color fgcolor, Vec2 const& pos )
           : text( text ), style( style ),
-            box( pos, Vec2( 0,0 ) ), show( true ),
-            fontSize( fontSize ), fgcolor( fgcolor ) {
+            fontSize( fontSize ), fgcolor( fgcolor ),
+            bgcolor({0,0,0,255}), box( pos, Vec2( 0,0 ) ),
+            show( true ) {
     font = Resources::GetFont( fontFile, fontSize );
     texture = nullptr;
-    bgcolor = {0,0,0,255};
     RemakeTexture();
 }
 
@@ -80,7 +80,7 @@ void Text::RemakeTexture() {
         SDL_DestroyTexture( texture.get() );
     }
 
-    SDL_Surface* surf;
+    SDL_Surface* surf = nullptr;
     switch ( style ) {
         case TextStyle::SOLID: {
             surf = TTF_RenderText_Solid( font.get(), text.c_str(), fgcolor );

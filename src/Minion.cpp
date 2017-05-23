@@ -37,11 +37,11 @@ bool Minion::IsDead() {
 void Minion::Shoot( Vec2 const& pos ) {
     Bullet *b = new Bullet( box.GetCentro(), (pos - box.GetCentro()).GetRadianos(),
                             BULLET_SPEED, BULLET_REACH, "./resources/img/minionbullet2.png",
-                            true, BULLET_DAMAGE, 3, 0.1 );
+                            true, 1.5*BULLET_DAMAGE, 3, 0.1 );
     Game::GetInstance().GetCurrentState().AddObject( b );
 }
 
-void Minion::NotifyCollision( GameObject const& other ) {}
+void Minion::NotifyCollision( GameObject const& other __attribute__((unused)) ) {}
 
 bool Minion::Is( std::string type ) const {
     return "Minion" == type;

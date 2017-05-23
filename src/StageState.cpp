@@ -1,5 +1,6 @@
 #include "StageState.hpp"
 
+#include <cstdlib>
 #include <string>
 
 #include "Alien.hpp"
@@ -17,10 +18,20 @@ StageState::StageState() : bg ( "./resources/img/ocean.jpg" )
     tileSet = new TileSet( 64, 64, "./resources/img/tileset.png" );
     tileMap = new TileMap( "./resources/map/tileMap.txt", tileSet );
     
-    Penguins *p = new Penguins( Vec2( 704, 640 ) );
+    Vec2 playerInitialPos( 704, 640 );
+    Penguins *p = new Penguins( playerInitialPos );
     objectArray.emplace_back( p );
     Camera::Follow( p );
-    objectArray.emplace_back( new Alien( Vec2( 512, 300 ), 3 ) );
+
+    float distanciaMedia = 500;
+    for ( int i = 2+(int)(4*rand()/(RAND_MAX+1)); i > 0; --i ) { // Random int in [2,5]
+        float angle = 2*M_PI*rand()/(RAND_MAX+1); // Random float in [0,2*pi)
+        float distance = distanciaMedia - 100 + 200*rand()/RAND_MAX; // Random float in [distanciaMedia-100,distanciaMedia+100]
+        Vec2 alienPos = Vec2::FromPolar( distance, angle );
+
+        int nMinions = 1+(int)(7*rand()/(RAND_MAX+1)); // Random int in [1,7]
+        objectArray.emplace_back( new Alien( alienPos + playerInitialPos, nMinions ) );
+    }
 
     quitRequested = false;
     ms.Play( -1 );
@@ -50,12 +61,12 @@ void StageState::Update( float dt ) {
 
     bool animHappening = false;
     // Checa por colisao
-    for ( int i = 0; i < objectArray.size()-1; ++i ) {
+    for ( int i = 0; i < (int)objectArray.size()-1; ++i ) {
         if ( objectArray[i]->Is( "Animation" ) ) {
             animHappening = true;
             continue;
         }
-        for ( int j = i+1; j < objectArray.size(); ++j ) {
+        for ( int j = i+1; j < (int)objectArray.size(); ++j ) {
             if ( objectArray[j]->Is( "Animation" ) ) continue;
             if ( Collision::IsColliding( objectArray[i]->box,
                                          objectArray[j]->box,
@@ -72,7 +83,7 @@ void StageState::Update( float dt ) {
         endDelay.Restart();
     } else if ( 0 == Alien::alienCount || nullptr == Penguins::player ) {
         endDelay.Update( dt );
-        ms.Stop(1.5*END_DELAY*1000);
+        ms.Stop(1.25*END_DELAY*1000);
     }
 
     if ( END_DELAY < endDelay.Get() ) {

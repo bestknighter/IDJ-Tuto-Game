@@ -4,11 +4,11 @@
 class Penguins;
 
 #define PLAYER_HP 500
-#define PLAYER_ACCELERATION 350 // Pixels/s^2
+#define PLAYER_ACCELERATION 275 // Pixels/s^2
 #define P_BULLET_OFFSET 65 // Pixels
 #define P_SHOOT_COOLDOWN 0.8 // s
 #define P_PRECISION_MOV_THRES 120 // Pixels/s
-#define PLAYER_MAX_SPEED 500 // Pixels/s
+#define PLAYER_MAX_SPEED 400 // Pixels/s
 #define PLAYER_MIN_SPEED 15 // Pixels/s
 #define PLAYER_FRICTION 150 // Pixels/s^2
 
