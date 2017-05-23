@@ -95,8 +95,8 @@ endif
 
 profile: set_profile all
 set_profile:
-	$(eval DIRECTIVES += -pg)
-	$(eval LINK_FLAGS += -pg)
+	$(eval DIRECTIVES += -pg -g3)
+	$(eval LINK_FLAGS += -pg -g3)
 
 coverage: set_coverage all
 set_coverage:

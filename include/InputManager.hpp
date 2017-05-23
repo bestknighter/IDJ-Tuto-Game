@@ -25,12 +25,12 @@ class InputManager;
 #include <unordered_map>
 
 #ifdef _WIN32
-    #include "SDL_Events.h"
+    #include "SDL_events.h"
 #elif __APPLE__
     #include "TargetConditionals.h"
-    #include "SDL2/SDL_Events.h"
+    #include "SDL2/SDL_events.h"
 #elif __unix__
-    #include "SDL2/SDL_Events.h"
+    #include "SDL2/SDL_events.h"
 #else
 #   error "Unknown or unsupported compiler"
 #endif
