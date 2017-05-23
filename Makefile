@@ -43,10 +43,10 @@ endif
 
 endif
 
-PRE_FLAGS = -DPROJECT_VERSION_MAJOR=6\
+PRE_FLAGS = -DPROJECT_VERSION_MAJOR=7\
 			-DPROJECT_VERSION_MINOR=0\
-			-DPROJECT_VERSION_PATCH=1\
-			-DPROJECT_VERSION_TWEAK=2
+			-DPROJECT_VERSION_PATCH=0\
+			-DPROJECT_VERSION_TWEAK=0
 
 .PRECIOUS: $(DEP_PATH)/%.d
 .PHONY: debug clean release profile coverage
@@ -58,8 +58,9 @@ release: set_release all
 all: $(EXEC)
 
 $(EXEC): $(OBJ_FILES)
-	$(CC) -o $@ $^ $(LIBS) $(LINK_FLAGS)
-	@echo Done! Compiled game is in the $(BUILD_PATH) folder
+	@echo Building game...
+	@$(CC) -o $@ $^ $(LIBS) $(LINK_FLAGS)
+	@echo Done! Path to compiled game is ./$(EXEC)
 
 $(BIN_PATH)/%.o: $(SRC_PATH)/%.cpp
 ifeq ($(OS),Windows_NT)
@@ -69,6 +70,7 @@ ifeq ($(OS),Windows_NT)
 else
 	@mkdir -p $(DEP_PATH) $(BIN_PATH) $(BUILD_PATH)
 endif
+	@echo Compiling $<
 	@$(CC) $(DEP_FLAGS) -c -o $@ $< $(DIRECTIVES) $(PRE_FLAGS)
 
 clean:
